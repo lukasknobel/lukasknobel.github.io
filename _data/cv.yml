@@ -1,9 +1,9 @@
-- title: General Information
+- title: general information
   type: list
   contents:
     - A detailed CV is provided upon request.
 
-- title: Education
+- title: education
   type: time_table
   contents:
     - title: Artificial Intelligence, MSc
@@ -11,4 +11,14 @@
       year: 2021-now
     - title: Cooperative Degree Programme in Computer Engineering, BSc
       institution: University of Applied Sciences Bremen, Germany
+      year: 2017-2021
+
+- title: professional experience
+  type: time_table
+  contents:
+    - title: University of Amsterdam, Netherlands
+      institution: Teaching Assistant
+      year: 2022-2023
+    - title: Airbus, Bremen, Germany
+      institution: Dual student
       year: 2017-2021
