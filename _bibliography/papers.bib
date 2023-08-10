@@ -1,14 +1,12 @@
-@inproceedings{sarah_de_boer_2022_6574637,
-  title={Reproducibility study of "Data-Driven Methods for Balancing Fairness and Efficiency in Ride-Pooling"},
-  author={De Boer*, Sarah and Cosma*, Radu Alexandru and Knobel*, Lukas and Koishekenov*, Yeskendir and Shaffrey*, Benjamin},
-  booktitle={ML Reproducibility Challenge 2021 (Fall Edition)},
-  year={2022},
-  doi = {10.5281/zenodo.6574637},
-  url = {https://doi.org/10.5281/zenodo.6574637},
-  abbr={ReScience},
-  code={https://github.com/reproducibilityaccount/reproducing-ridesharing},
-  pdf={https://openreview.net/pdf?id=UU4rj9QBzvu},
-  abstract={Our work attempts to verify two methods to mitigate forms of inequality in ride‐pooling platforms proposed in the paper Data-Driven Methods for Balancing Fairness and Efficiency in Ride-Pooling: (1) integrating fairness constraints into the objective functions and (2) redistributing income of drivers. We extend this paper by testing for robustness to a change in the neighbourhood selection process by using actual Manhattan neighbour‐hoods and we use corresponding demographic data to examine differences in service based on ethnicity.},
+@inproceedings{cosma2023geometric,
+  title={Geometric Superpixel Representations for Efficient Image Classification with Graph Neural Networks},
+  author={Cosma*, Radu A and Knobel*, Lukas and Van der Linden, Putri A and Knigge, David M and Bekkers, Erik J},
+  booktitle={ICCV 2023 - Visual Inductive Priors for Data-Efficient Deep Learning Workshop},
+  year={2023},
+  abbr={ICCV},
+  code={https://github.com/lukasknobel/ShapeGNN},
+  pdf={https://openreview.net/pdf?id=E7zgkaEDcE},
+  abstract={While Convolutional Neural Networks and Vision Transformers are the go-to solutions for image classification, their model sizes make them expensive to train and deploy. Alternatively, input complexity can be reduced following the intuition that adjacent similar pixels contain redundant information. This prior can be exploited by clustering such pixels into superpixels and connecting adjacent superpixels with edges, resulting in a sparse graph representation on which Graph Neural Networks (GNNs) can operate efficiently. Although previous work clearly highlights the computational efficiency of this approach, this prior can be overly restrictive and, as a result, performance is lacking compared to contemporary dense vision methods. In this work, we propose to extend this prior by incorporating shape information into the individual superpixel representations. This is achieved through a separate, patch-level GNN. Together with enriching the previously explored appearance and pose information of superpixels and further architectural changes, our best model, ShapeGNN, surpasses the previous state-of-the-art in superpixel-based image classification on CIFAR-10 by a significant margin. We also present an optimised pipeline for efficient image-to-graph transformation and show the viability of training end-to-end on high-resolution images on ImageNet-1k.},
   selected={true}
 }
 @article{knobel2023selfcollages,
@@ -21,4 +19,17 @@
       pdf={https://arxiv.org/pdf/2307.08727.pdf},
       abstract={While recent supervised methods for reference-based object counting continue to improve the performance on benchmark datasets, they have to rely on small datasets due to the cost associated with manually annotating dozens of objects in images. We propose Unsupervised Counter (UnCo), a model that can learn this task without requiring any manual annotations. To this end, we construct "SelfCollages", images with various pasted objects as training samples, that provide a rich learning signal covering arbitrary object types and counts. Our method builds on existing unsupervised representations and segmentation techniques to successfully demonstrate the ability to count objects without manual supervision. Our experiments show that our method not only outperforms simple baselines and generic models such as FasterRCNN, but also matches the performance of supervised counting models in some domains.},
       selected={true}
+}
+@inproceedings{sarah_de_boer_2022_6574637,
+  title={Reproducibility study of "Data-Driven Methods for Balancing Fairness and Efficiency in Ride-Pooling"},
+  author={De Boer*, Sarah and Cosma*, Radu Alexandru and Knobel*, Lukas and Koishekenov*, Yeskendir and Shaffrey*, Benjamin},
+  booktitle={ML Reproducibility Challenge 2021 (Fall Edition)},
+  year={2022},
+  doi = {10.5281/zenodo.6574637},
+  url = {https://doi.org/10.5281/zenodo.6574637},
+  abbr={ReScience},
+  code={https://github.com/reproducibilityaccount/reproducing-ridesharing},
+  pdf={https://openreview.net/pdf?id=UU4rj9QBzvu},
+  abstract={Our work attempts to verify two methods to mitigate forms of inequality in ride‐pooling platforms proposed in the paper Data-Driven Methods for Balancing Fairness and Efficiency in Ride-Pooling: (1) integrating fairness constraints into the objective functions and (2) redistributing income of drivers. We extend this paper by testing for robustness to a change in the neighbourhood selection process by using actual Manhattan neighbour‐hoods and we use corresponding demographic data to examine differences in service based on ethnicity.},
+  selected={true}
 }
