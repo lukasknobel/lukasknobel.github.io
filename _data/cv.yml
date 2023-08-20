@@ -3,22 +3,25 @@
   contents:
     - A detailed CV is provided upon request.
 
+- title: professional experience
+  type: time_table
+  contents:
+    - title: Machine Learning Scientist
+      institution: TNO, the Hague, Netherlands
+      year: 2023-now
+    - title: Teaching Assistant
+      institution: University of Amsterdam, Netherlands
+      year: 2022-2023
+    - title: Dual student
+      institution: Airbus, Bremen, Germany
+      year: 2017-2021
+
 - title: education
   type: time_table
   contents:
     - title: Artificial Intelligence, MSc
       institution: University of Amsterdam, Netherlands
-      year: 2021-now
+      year: 2021-2023
     - title: Cooperative Degree Programme in Computer Engineering, BSc
       institution: University of Applied Sciences Bremen, Germany
-      year: 2017-2021
-
-- title: professional experience
-  type: time_table
-  contents:
-    - title: University of Amsterdam, Netherlands
-      institution: Teaching Assistant
-      year: 2022-2023
-    - title: Airbus, Bremen, Germany
-      institution: Dual student
       year: 2017-2021
