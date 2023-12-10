@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-I completed the MSc Artificial Intelligence program at the University of Amsterdam.
+I graduated with distinction from the MSc Artificial Intelligence programme at the University of Amsterdam.
