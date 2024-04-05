@@ -1,3 +1,14 @@
+@inproceedings{knobel2024learning,
+      title={Learning to Count without Annotations}, 
+      author={Lukas Knobel and Tengda Han* and Yuki M. Asano*},
+      booktitle={CVPR 2024},
+      year={2024},
+      abbr={CVPR},
+      code={https://github.com/lukasknobel/SelfCollages},
+      pdf={https://arxiv.org/pdf/2307.08727.pdf},
+      abstract={While recent supervised methods for reference-based object counting continue to improve the performance on benchmark datasets, they have to rely on small datasets due to the cost associated with manually annotating dozens of objects in images. We propose UnCounTR, a model that can learn this task without requiring any manual annotations. To this end, we construct "Self-Collages", images with various pasted objects as training samples, that provide a rich learning signal covering arbitrary object types and counts. Our method builds on existing unsupervised representations and segmentation techniques to successfully demonstrate for the first time the ability of reference-based counting without manual supervision. Our experiments show that our method not only outperforms simple baselines and generic models such as FasterRCNN and DETR, but also matches the performance of supervised counting models in some domains.},
+      selected={true}
+}
 @inproceedings{cosma2023geometric,
   title={Geometric Superpixel Representations for Efficient Image Classification with Graph Neural Networks},
   author={Cosma*, Radu A and Knobel*, Lukas and Van der Linden, Putri A and Knigge, David M and Bekkers, Erik J},
@@ -8,17 +19,6 @@
   pdf={https://openaccess.thecvf.com/content/ICCV2023W/VIPriors/papers/Cosma_Geometric_Superpixel_Representations_for_Efficient_Image_Classification_with_Graph_Neural_ICCVW_2023_paper.pdf},
   abstract={While Convolutional Neural Networks and Vision Transformers are the go-to solutions for image classification, their model sizes make them expensive to train and deploy. Alternatively, input complexity can be reduced following the intuition that adjacent similar pixels contain redundant information. This prior can be exploited by clustering such pixels into superpixels and connecting adjacent superpixels with edges, resulting in a sparse graph representation on which Graph Neural Networks (GNNs) can operate efficiently. Although previous work clearly highlights the computational efficiency of this approach, this prior can be overly restrictive and, as a result, performance is lacking compared to contemporary dense vision methods. In this work, we propose to extend this prior by incorporating shape information into the individual superpixel representations. This is achieved through a separate, patch-level GNN. Together with enriching the previously explored appearance and pose information of superpixels and further architectural changes, our best model, ShapeGNN, surpasses the previous state-of-the-art in superpixel-based image classification on CIFAR-10 by a significant margin. We also present an optimised pipeline for efficient image-to-graph transformation and show the viability of training end-to-end on high-resolution images on ImageNet-1k.},
   selected={true}
-}
-@article{knobel2023selfcollages,
-      title={Semantic Counting from Self-Collages}, 
-      author={Lukas Knobel and Tengda Han and Yuki M. Asano},
-      journal={arXiv:2307.08727},
-      year={2023},
-      abbr={Preprint},
-      code={https://github.com/lukasknobel/SelfCollages},
-      pdf={https://arxiv.org/pdf/2307.08727.pdf},
-      abstract={While recent supervised methods for reference-based object counting continue to improve the performance on benchmark datasets, they have to rely on small datasets due to the cost associated with manually annotating dozens of objects in images. We propose Unsupervised Counter (UnCo), a model that can learn this task without requiring any manual annotations. To this end, we construct "SelfCollages", images with various pasted objects as training samples, that provide a rich learning signal covering arbitrary object types and counts. Our method builds on existing unsupervised representations and segmentation techniques to successfully demonstrate the ability to count objects without manual supervision. Our experiments show that our method not only outperforms simple baselines and generic models such as FasterRCNN, but also matches the performance of supervised counting models in some domains.},
-      selected={true}
 }
 @inproceedings{sarah_de_boer_2022_6574637,
   title={Reproducibility study of "Data-Driven Methods for Balancing Fairness and Efficiency in Ride-Pooling"},
