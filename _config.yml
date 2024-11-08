@@ -114,7 +114,7 @@ contact_note: #>
 google_analytics:  # your Google Analytics measurement ID (format: G-XXXXXXXXXX)
 panelbear_analytics:  # panelbear analytics site ID (format: XXXXXXXXX)
 
-google_site_verification:  # your google-site-verification ID (Google Search Console)
+google_site_verification: GV7I79S9bYiKM3WF2Bn1OnAF85SOyY6NDSx35iEPdzI # your google-site-verification ID (Google Search Console)
 bing_site_verification:  # out your bing-site-verification ID (Bing Webmaster)
 
 ## -----------------------------------------------------------------------------
