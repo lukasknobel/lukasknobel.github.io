@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Self-Supervised Learning of Structured Dynamics from Videos">
+  <meta name="description" content="Structured Dynamics Model (SDM) learns primary and residual motion tokens from frozen image features using self-supervised future-feature prediction and weak synthetic supervision.">
+  <meta name="keywords" content="structured dynamics, video representation learning, self-supervised learning, motion representation, computer vision">
+  <meta name="author" content="Lukas Knobel, Andrew Zisserman, Yuki M. Asano">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Structured Dynamics">
+  <meta property="og:title" content="Self-Supervised Learning of Structured Dynamics from Videos">
+  <meta property="og:description" content="SDM remodels frozen image features into structured primary and residual motion tokens.">
+  <meta property="og:url" content="https://lukasknobel.github.io/projects/StructuredDynamics/">
+  <meta property="og:image" content="https://lukasknobel.github.io/projects/StructuredDynamics/static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Structured Dynamics project preview">
+  <meta property="article:published_time" content="2026-06-19T00:00:00.000Z">
+  <meta property="article:author" content="Lukas Knobel">
+  <meta property="article:section" content="Research">
+  <meta property="article:tag" content="structured dynamics">
+  <meta property="article:tag" content="self-supervised learning">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@LukasKnobel1">
+  <meta name="twitter:creator" content="@LukasKnobel1">
+  <meta name="twitter:title" content="Self-Supervised Learning of Structured Dynamics from Videos">
+  <meta name="twitter:description" content="SDM learns primary and residual motion tokens for video dynamics from frozen image features.">
+  <meta name="twitter:image" content="https://lukasknobel.github.io/projects/StructuredDynamics/static/images/social_preview.png">
+  <meta name="twitter:image:alt" content="Structured Dynamics project preview">
+
+  <!-- Academic/Research Specific -->
+  <meta name="citation_title" content="Self-Supervised Learning of Structured Dynamics from Videos">
+  <meta name="citation_author" content="Knobel, Lukas">
+  <meta name="citation_author" content="Zisserman, Andrew">
+  <meta name="citation_author" content="Asano, Yuki M.">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="Preprint">
+  <!-- TODO: update once PDF/arXiv URL is public. -->
+  <meta name="citation_pdf_url" content="static/pdfs/paper.pdf">
+  
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#356b45">
+  <meta name="msapplication-TileColor" content="#356b45">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+  <title>Self-Supervised Learning of Structured Dynamics from Videos</title>
+  
+  <!-- Favicon and App Icons -->
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+  
+  <!-- Critical CSS - Load synchronously -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  
+  <!-- Non-critical CSS - Load asynchronously -->
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+  
+  <!-- Fonts - Optimized loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Defer non-critical JavaScript -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <!-- Project-specific styling. Kept inline for now so the page is easy to test locally; move to static/css/custom.css once stable. -->
+  <style>
+    :root {
+      --sdm-ink: #17201b;
+      --sdm-muted: #5d665f;
+      --sdm-accent: #356b45;
+      --sdm-accent-2: #6f8f3a;
+      --sdm-link: var(--primary-color);
+      --sdm-link-soft: var(--primary-hover);
+      --sdm-accent-soft: #edf5ee;
+      --sdm-gold: #b59a35;
+      --sdm-border: #dce4dd;
+      --sdm-bg: #fbfcfa;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--sdm-ink); background: var(--sdm-bg); }
+    a {
+      color: var(--primary-color);
+    }
+
+    a:hover {
+      color: var(--primary-hover);
+    }
+
+    /* Softer green/gold gradient instead of the template's pink/red accent. */
+    .title::after,
+    .publication-title::after,
+    .section-title::after,
+    .author-block a::after,
+    .publication-authors a::after {
+      background: linear-gradient(90deg, var(--sdm-accent), var(--sdm-gold)) !important;
+    }
+
+    .hero { background: linear-gradient(180deg, #f4f8f2 0%, #fbfcfa 100%); }
+    .paper-eyebrow { color: var(--sdm-accent); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .78rem; margin-bottom: 1rem; }
+    .publication-title { max-width: 980px; margin-left: auto; margin-right: auto; letter-spacing: -0.04em; line-height: 1.02; }
+    .publication-authors { color: var(--sdm-ink); }
+    .publication-affiliations { color: var(--sdm-ink); margin-top: .7rem; margin-bottom: 1.1rem; line-height: 1.55; }
+    .publication-authors sup,
+    .affil-mark { color: var(--sdm-accent); font-weight: 700; }
+    .affil-mark { display: inline-block; margin-right: .32rem; }
+    .publication-links .button { margin: .25rem .2rem; }
+    .publication-links .button:hover,
+    .publication-links .button:focus {
+      border-color: var(--sdm-link-soft) !important;
+      background: var(--sdm-link-soft) !important;
+      color: white !important;
+    }
+    .scroll-to-top { background: var(--sdm-link) !important; }
+    .scroll-to-top:hover { background: var(--sdm-link-soft) !important; color: white !important; }
+
+    .section-title { letter-spacing: -0.03em; margin-bottom: 1.25rem; }
+    .tldr-card { background: white; border: 1px solid var(--sdm-border); border-radius: 18px; padding: 1.35rem 1.45rem; box-shadow: 0 16px 40px rgba(35, 55, 40, .06); }
+    .tldr-label { color: var(--sdm-accent); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .35rem; }
+
+    .deck { background: white; border: 1px solid var(--sdm-border); border-radius: 22px; overflow: hidden; box-shadow: 0 18px 45px rgba(35, 55, 40, .07); margin-top: 1.5rem; }
+    .deck-main { position: relative; background: #f2f6f2; min-height: 360px; }
+    .deck-slide { display: none; padding: 1.25rem; }
+    .deck-slide.is-active { display: block; }
+    .deck-media-wrap { position: relative; display: grid; place-items: center; min-height: 320px; border-radius: 16px; overflow: hidden; background: #eef4ee; border: 1px solid #dbe6dd; }
+    .deck video, .deck img { max-width: 100%; width: 100%; height: auto; border-radius: 12px; display: block; }
+    .deck-caption { padding: 1rem 1.25rem 1.2rem; border-top: 1px solid var(--sdm-border); }
+    .deck-caption h3 { margin-bottom: .25rem; }
+    .deck-caption p { color: var(--sdm-muted); }
+    .deck-controls { display: flex; align-items: center; justify-content: space-between; gap: .7rem; padding: .75rem 1rem; border-top: 1px solid var(--sdm-border); background: #fbfdfb; }
+    .deck-button { appearance: none; border: 1px solid var(--sdm-border); background: white; border-radius: 999px; min-width: 2.4rem; height: 2.4rem; cursor: pointer; font-weight: 700; padding: 0 .75rem; }
+    .deck-button:hover { border-color: var(--sdm-accent); color: var(--sdm-accent); }
+    .deck-dots { display: flex; gap: .45rem; justify-content: center; align-items: center; flex: 1; }
+    .deck-dot { width: .65rem; height: .65rem; border-radius: 50%; border: 0; background: #c8d4ca; cursor: pointer; }
+    .deck-dot.is-active { background: var(--sdm-accent); }
+    .missing-media { position: absolute; inset: 1rem; display: none; align-items: center; justify-content: center; text-align: center; padding: 2rem; border: 1px dashed #aebcaf; border-radius: 14px; color: var(--sdm-muted); background: rgba(255,255,255,.86); }
+    .missing-media.show { display: flex; }
+
+    .result-table-wrap { overflow-x: auto; background: white; border: 1px solid var(--sdm-border); border-radius: 16px; box-shadow: 0 14px 35px rgba(35, 55, 40, .05); }
+    table.results { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    table.results th, table.results td { padding: .72rem .78rem; border-bottom: 1px solid #e7eee8; text-align: right; white-space: nowrap; }
+    table.results th:first-child, table.results td:first-child { text-align: left; font-weight: 700; }
+    table.results thead th { background: #f0f6f0; color: var(--sdm-ink); font-size: .82rem; }
+    table.results tr.sdm-row { background: #eef7ef; }
+    .table-note, .soft-note { color: var(--sdm-muted); font-size: .92rem; margin-top: .75rem; }
+
+    .todo-box { border-left: 4px solid var(--sdm-gold); background: #fff9e8; padding: 1rem 1.2rem; border-radius: 12px; }
+    .bibtex-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    pre { border-radius: 16px; background: #111814; color: #edf5ee; padding: 1.2rem; overflow-x: auto; }
+    footer.footer { background: #f3f7f3; border-top: 1px solid var(--sdm-border); }
+
+    @media (max-width: 800px) {
+      .publication-title { font-size: 2.35rem !important; }
+      .deck-main { min-height: 250px; }
+      .deck-media-wrap { min-height: 220px; }
+    }
+  </style>
+  
+  <!-- Structured Data for Academic Papers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Self-Supervised Learning of Structured Dynamics from Videos",
+    "description": "The Structured Dynamics Model remodels frozen image features into primary and residual motion tokens through future-feature prediction.",
+    "author": [
+      {
+        "@type": "Person",
+        "name": "Lukas Knobel",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Fundamental AI Lab, UTN"
+        }
+      },
+      {
+        "@type": "Person",
+        "name": "Andrew Zisserman",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "VGG, University of Oxford"
+        }
+      },
+      {
+        "@type": "Person",
+        "name": "Yuki M. Asano",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Fundamental AI Lab, UTN"
+        }
+      }
+    ],
+    "datePublished": "2026-06-19",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Preprint"
+    },
+    "url": "https://lukasknobel.github.io/projects/StructuredDynamics/",
+    "image": "https://lukasknobel.github.io/projects/StructuredDynamics/static/images/social_preview.png",
+    "keywords": ["structured dynamics", "video representation learning", "self-supervised learning", "motion representation", "computer vision"],
+    "abstract": "Understanding motion in video is a fundamental challenge for visual learning, as frame-to-frame change entangles two sources of dynamics: camera motion and object motion. This decomposition has remained underexplored in representation learning, partly because these factors are tightly coupled in natural videos and difficult to supervise separately. Yet recovering it is important for learning robust motion representations that separate meaningful object dynamics from camera-induced variation. We study whether such structured motion representations can be recovered from frozen features of a pretrained image vision transformer. We propose the Structured Dynamics Model (SDM), which explicitly separates the dominant source of temporal change from residual dynamics through future-feature prediction, rather than representing video change with a single entangled latent or with unstructured, spatially dense transition tokens. Training combines self-supervised learning on real video with weak supervision of scene dynamics on synthetic Kubric data. We evaluate SDM on ProbeMotion, a new evaluation suite spanning synthetic and real videos with camera motion, object motion, and combined dynamics. SDM outperforms backbone baselines using global CLS or average-pooled features, and compares favorably to strongly supervised representations such as VGGT on several probes, despite using substantially weaker supervision. These results suggest that pretrained image models can be readily repurposed into structured video-dynamics representations, providing a useful inductive bias for learning and analyzing latent video dynamics.",
+    "isAccessibleForFree": true,
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "mainEntity": {
+      "@type": "WebPage",
+      "@id": "https://lukasknobel.github.io/projects/StructuredDynamics/"
+    },
+    "about": [
+      {"@type": "Thing", "name": "Video representation learning"},
+      {"@type": "Thing", "name": "Self-supervised learning"}
+    ]
+  }
+  </script>
+  
+  <!-- Website/Organization Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Fundamental AI Lab",
+    "url": "https://fundamentalailab.github.io/",
+    "sameAs": [
+      "https://github.com/lukasknobel"
+    ]
+  }
+  </script>
+</head>
+<body>
+
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+
+  <main id="main-content">
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <div class="paper-eyebrow">Preprint · Structured video dynamics</div>
+              <h1 class="title is-1 publication-title">Self-Supervised Learning of Structured Dynamics from Videos</h1>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  <a href="https://lukasknobel.github.io/" target="_blank" rel="noopener">Lukas Knobel</a><sup>1</sup>,</span>
+                <span class="author-block">
+                  <a href="https://eng.ox.ac.uk/people/andrew-zisserman/" target="_blank" rel="noopener">Andrew Zisserman</a><sup>2</sup>,</span>
+                <span class="author-block">
+                  <a href="https://yukimasano.github.io/" target="_blank" rel="noopener">Yuki M. Asano</a><sup>1</sup>
+                </span>
+              </div>
+
+              <div class="is-size-5 publication-affiliations">
+                <span class="author-block"><sup class="affil-mark">1</sup>Fundamental AI Lab, UTN</span><br>
+                <span class="author-block"><sup class="affil-mark">2</sup>VGG, University of Oxford</span>
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <!-- TODO: replace this placeholder with the arXiv URL once the preprint is public.
+                  <span class="link-block">
+                    <a href="." class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="ai ai-arxiv"></i></span>
+                      <span>arXiv</span>
+                    </a>
+                  </span>
+                  -->
+                  <span class="link-block">
+                    <button type="button" class="external-link button is-normal is-rounded is-dark" disabled aria-disabled="true">
+                      <span class="icon"><i class="ai ai-arxiv"></i></span>
+                      <span>arXiv (available soon)</span>
+                    </button>
+                  </span>
+
+                  <!-- Code repository. -->
+                  <span class="link-block">
+                    <a href="https://github.com/lukasknobel/StructuredDynamics" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="fab fa-github"></i></span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+
+                  <!-- BibTeX section. -->
+                  <span class="link-block">
+                    <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="fas fa-quote-right"></i></span>
+                      <span>BibTeX</span>
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Teaser video-->
+    <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <video poster="" id="tree" autoplay controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/teaser.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </section>
+    <!-- End teaser video -->
+
+    <!-- TL;DR -->
+    <section class="section tldr-section">
+      <div class="container is-max-desktop">
+        <div class="tldr-card">
+          <div class="tldr-label">TL;DR</div>
+          <p class="is-size-5">
+            We learn structured dynamics representations from frozen image features by associating temporal change with <strong>primary</strong> and <strong>residual</strong> motion tokens.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- End TL;DR -->
+
+    <!-- Paper abstract -->
+    <section class="section hero is-light" id="abstract">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3 section-title">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Understanding motion in video is a fundamental challenge for visual learning, as frame-to-frame change entangles two sources of dynamics: <strong>camera motion</strong> and <strong>object motion</strong>. This decomposition has remained underexplored in representation learning, partly because these factors are tightly coupled in natural videos and difficult to supervise separately. Yet recovering it is important for learning robust motion representations that separate meaningful object dynamics from camera-induced variation. We study whether such <strong>structured motion representations</strong> can be recovered from frozen features of a pretrained image vision transformer. We propose the <strong>Structured Dynamics Model (SDM)</strong>, which explicitly separates the <strong>dominant source of temporal change</strong> from <strong>residual dynamics</strong> through future-feature prediction, rather than representing video change with a single entangled latent or with unstructured, spatially dense transition tokens. Training combines <strong>self-supervised learning on real video</strong> with <strong>weak supervision of scene dynamics</strong> on synthetic Kubric data. We evaluate SDM on <strong>ProbeMotion</strong>, a new evaluation suite spanning synthetic and real videos with camera motion, object motion, and combined dynamics. SDM outperforms backbone baselines using global CLS or average-pooled features, and compares favorably to strongly supervised representations such as VGGT on several probes, despite using substantially weaker supervision. These results suggest that pretrained image models can be readily repurposed into <strong>structured video-dynamics representations</strong>, providing a useful inductive bias for learning and analyzing latent video dynamics.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End paper abstract -->
+
+    <!-- Method carousel -->
+    <section class="hero is-small" id="method">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <h2 class="title is-3 section-title">Method: structured motion tokens</h2>
+          <p class="content">
+            The Structured Dynamics Model (SDM) predicts how frozen visual features evolve over time. It first extracts a recurrent primary token <em>p</em> to explain the dominant source of change, then extracts a residual token <em>r</em> to model the remaining dynamics.
+          </p>
+
+          <div class="deck" data-deck data-autoplay="true">
+            <div class="deck-main">
+
+              <div class="deck-slide is-active">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/method-00.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/method-01.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/method-02.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/method-03.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/method-04.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/method-05.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/method-06.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/method-07.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/method-08.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/method-09.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="deck-controls">
+              <button class="deck-button" type="button" data-deck-prev aria-label="Previous slide">←</button>
+              <div class="deck-dots" aria-label="Slide navigation"></div>
+              <button class="deck-button" type="button" data-deck-toggle aria-label="Pause autoplay">Pause</button>
+              <button class="deck-button" type="button" data-deck-next aria-label="Next slide">→</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experiments carousel -->
+    <section class="hero is-small is-light" id="experiments">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <h2 class="title is-3 section-title">Experiments: ProbeMotion</h2>
+          <p class="content">
+            ProbeMotion evaluates motion representations across synthetic and real camera motion, object motion, and motion-adjacent action recognition using linear probes.
+          </p>
+          <div class="deck" data-deck data-autoplay="true">
+            <div class="deck-main">
+
+              <div class="deck-slide is-active">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/experiments-00.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/experiments-01.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/experiments-02.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/experiments-03.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/experiments-04.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/experiments-05.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video muted playsinline preload="metadata">
+                    <source src="static/videos/experiments-06.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="deck-controls">
+              <button class="deck-button" type="button" data-deck-prev aria-label="Previous slide">←</button>
+              <div class="deck-dots" aria-label="Slide navigation"></div>
+              <button class="deck-button" type="button" data-deck-toggle aria-label="Pause autoplay">Pause</button>
+              <button class="deck-button" type="button" data-deck-next aria-label="Next slide">→</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End youtube video -->
+
+    <!-- results table -->
+    <section class="hero is-small" id="results">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <h2 class="title is-3 section-title">Main results</h2>
+          <div class="result-table-wrap">
+            <table class="results">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Kubric cam ↓</th>
+                  <th>Kubric obj ↓</th>
+                  <th>DL3DV ↓</th>
+                  <th>Static DAVIS ↓</th>
+                  <th>Static YTVOS ↓</th>
+                  <th>CameraBench ↑</th>
+                  <th>SSv2-110k ↑</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="supervised-row">
+                  <td>VGGT avg. feat.</td>
+                  <td>0.09</td><td>0.32</td><td>0.56</td><td>0.78</td><td>0.79</td><td>82.9</td><td>15.5</td>
+                </tr>
+                <tr class="supervised-row">
+                  <td>VGGT cam. token</td>
+                  <td>0.03</td><td>0.43</td><td>0.53</td><td>0.71</td><td>0.81</td><td>88.7</td><td>13.5</td>
+                </tr>
+                <tr class="supervised-row">
+                  <td>DA3 avg. feat.</td>
+                  <td>0.11</td><td>0.40</td><td>0.55</td><td>0.87</td><td>0.89</td><td>83.3</td><td>14.0</td>
+                </tr>
+                <tr class="supervised-row">
+                  <td>DA3 cam. token</td>
+                  <td>0.04</td><td>0.58</td><td>0.53</td><td>0.87</td><td>0.91</td><td>84.4</td><td>12.2</td>
+                </tr>
+                <tr class="supervised-row">
+                  <td>Pi3X avg. feat.</td>
+                  <td>0.07</td><td>0.38</td><td>0.52</td><td>0.52</td><td>0.75</td><td>87.9</td><td>19.8</td>
+                </tr>
+                <tr class="supervised-row supervised-last">
+                  <td>Pi3X avg. regs.</td>
+                  <td>0.08</td><td>0.45</td><td>0.53</td><td>0.61</td><td>0.77</td><td>85.7</td><td>12.7</td>
+                </tr>
+                <tr>
+                  <td>DeltaTok</td>
+                  <td><span class="second-best">0.29</span></td>
+                  <td><span class="second-best">0.35</span></td>
+                  <td><span class="second-best">0.65</span></td>
+                  <td><strong>0.69</strong></td>
+                  <td><span class="second-best">0.75</span></td>
+                  <td><strong>89.6</strong></td>
+                  <td>13.5</td>
+                </tr>
+                <tr>
+                  <td>AVG-pool</td>
+                  <td>0.96</td>
+                  <td>0.93</td>
+                  <td>1.04</td>
+                  <td><span class="second-best">0.78</span></td>
+                  <td>0.91</td>
+                  <td>67.0</td>
+                  <td>2.3</td>
+                </tr>
+                <tr>
+                  <td>CLS</td>
+                  <td>1.16</td>
+                  <td>0.78</td>
+                  <td>1.09</td>
+                  <td>0.90</td>
+                  <td>1.05</td>
+                  <td>68.6</td>
+                  <td><span class="second-best">14.9</span></td>
+                </tr>
+                <tr class="sdm-row">
+                  <td>SDM</td>
+                  <td><strong>0.16</strong></td>
+                  <td><strong>0.19</strong></td>
+                  <td><strong>0.59</strong></td>
+                  <td>0.87</td>
+                  <td><strong>0.71</strong></td>
+                  <td><span class="second-best">85.3</span></td>
+                  <td><strong>23.1</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-note">
+            Regression results on Kubric, DL3DV, static DAVIS, and static YTVOS are reported as standardized MSE. Classification results on CameraBench and SSv2-110k are reported as top-1 accuracy in %. Light-grey entries indicate strongly supervised 3D/geometry models. Bold and underlined numbers indicate the best and second-best results among methods without explicit geometric supervision.
+          </p>
+          <p class="results-summary">
+            SDM outperforms DeltaTok on five of seven ProbeMotion tasks despite using a smaller training budget and lower-resolution inputs. It also improves over CLS and average-pooled DINOv2-with-register baselines on most tasks, suggesting that structured future-feature prediction turns frozen image features into stronger motion representations. SDM performs especially well across motion probes and achieves the strongest SSv2-110k action accuracy among methods without explicit geometric supervision.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- End results table -->
+
+    <!-- Qualitative results -->
+    <section class="section" id="qualitative">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 section-title">Qualitative analysis</h2>
+
+        <p class="results-summary">
+          In addition to quantitative results on ProbeMotion, we qualitatively inspect whether SDM learns structured and reusable motion representations. The visualizations below show how the primary and residual prediction stages explain complementary changes, and whether learned motion tokens can be reused beyond the observed transition.
+        </p>
+
+        <div class="qualitative-grid">
+
+          <article class="qualitative-card">
+            <h3 class="title is-4">Stage-wise feature compensation</h3>
+            <figure>
+              <img src="static/images/qualitative_structured.png" alt="Stage-wise structured feature prediction showing primary and residual compensation errors.">
+              <figcaption>
+                We visualize feature-map error to the target after primary and residual compensation. Errors are shown in red.
+                The <span class="motion-tag primary">primary</span> stage corrects the dominant global change, including the camera-induced movement of the edges of the track. Notably, primary motion compensation increases the error around the independently moving car. The <span class="motion-tag residual">residual</span> stage reduces this localized error.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="qualitative-card">
+            <h3 class="title is-4">Motion extrapolation</h3>
+            <figure>
+              <img src="static/images/qualitative_extrapolation.png" alt="Motion extrapolation using repeatedly applied motion tokens.">
+              <figcaption>
+                Repeatedly applying the last motion token gives plausible short-horizon feature extrapolations, the object features follow the extrapolated motion beyond the last observed position. Over longer horizons, predictions drift, indicating that the tokens capture local dynamics but are not designed for reliable long-range forecasting without new observations. Visualizations are done by PCA projection to RGB after normalization, black boxes mark the last observed ground-truth object position, which is repeated for the extrapolated feature maps.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="qualitative-card">
+            <h3 class="title is-4">Latent motion swapping</h3>
+            <figure>
+              <img src="static/images/qualitative_swapping.png" alt="Latent motion swapping by applying motion tokens from a source clip to a target clip.">
+              <figcaption>
+                Applying motion tokens from a source clip to a target clip containing a different object induces consistent short-horizon feature-space motion. This suggests that SDM tokens parameterize local transformations that can transfer across videos, although quality decreases over longer horizons. Black boxes mark the initial object position.
+              </figcaption>
+            </figure>
+          </article>
+
+        </div>
+      </div>
+    </section>
+    <!-- End qualitative results -->
+
+    <!--BibTex citation -->
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <div class="bibtex-header">
+          <h2 class="title section-title">BibTeX</h2>
+          <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+            <i class="fas fa-copy"></i>
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+        <pre id="bibtex-code"><code>coming soon...</code></pre>
+      </div>
+    </section>
+    <!--End BibTex citation -->
+  </main>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>.
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    function initialiseDeck(deck) {
+      const slides = Array.from(deck.querySelectorAll('.deck-slide'));
+      const dotsWrap = deck.querySelector('.deck-dots');
+      const prev = deck.querySelector('[data-deck-prev]');
+      const next = deck.querySelector('[data-deck-next]');
+      const toggle = deck.querySelector('[data-deck-toggle]');
+
+      let index = 0;
+      let playing = deck.dataset.autoplay === 'true';
+
+      function getVideo(i) {
+        return slides[i]?.querySelector('video') || null;
+      }
+
+      function resetVideo(video) {
+        if (!video) return;
+        video.pause();
+        try {
+          video.currentTime = 0;
+        } catch (e) {
+          // Some browsers may not allow seeking before metadata is loaded.
+        }
+      }
+
+      function playVideo(video) {
+        if (!video || !playing) return;
+        video.play().catch(() => {});
+      }
+
+      function updateDots() {
+        Array.from(dotsWrap.children).forEach((dot, i) => {
+          dot.classList.toggle('is-active', i === index);
+        });
+      }
+
+      function goTo(nextIndex) {
+        const oldIndex = index;
+        const newIndex = (nextIndex + slides.length) % slides.length;
+
+        const oldVideo = getVideo(oldIndex);
+        const newVideo = getVideo(newIndex);
+
+        index = newIndex;
+
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('is-active', i === index);
+        });
+
+        updateDots();
+
+        // Reset the old video only after it is hidden.
+        resetVideo(oldVideo);
+
+        // New video should usually already be at 0 because we reset on leave.
+        // This extra reset is cheap and helps when jumping with dots/buttons.
+        resetVideo(newVideo);
+        playVideo(newVideo);
+      }
+
+      slides.forEach((slide, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'deck-dot' + (i === 0 ? ' is-active' : '');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        dot.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(dot);
+
+        const video = slide.querySelector('video');
+        const missing = slide.querySelector('.missing-media');
+
+        if (video) {
+          video.preload = 'auto';
+          video.load();
+
+          video.addEventListener('error', () => {
+            if (missing) missing.classList.add('show');
+          }, true);
+
+          video.addEventListener('loadeddata', () => {
+            if (missing) missing.classList.remove('show');
+          });
+
+          video.addEventListener('ended', () => {
+            if (playing) goTo(index + 1);
+          });
+        }
+      });
+
+      prev.addEventListener('click', () => goTo(index - 1));
+      next.addEventListener('click', () => goTo(index + 1));
+
+      toggle.addEventListener('click', () => {
+        playing = !playing;
+        toggle.textContent = playing ? 'Pause' : 'Play';
+
+        const activeVideo = getVideo(index);
+
+        if (playing) {
+          playVideo(activeVideo);
+        } else if (activeVideo) {
+          activeVideo.pause();
+        }
+      });
+
+      toggle.textContent = playing ? 'Pause' : 'Play';
+
+      // Reset all inactive videos at startup.
+      slides.forEach((_, i) => {
+        if (i !== index) resetVideo(getVideo(i));
+      });
+
+      playVideo(getVideo(index));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-deck]').forEach(initialiseDeck);
+    });
+  </script>
+</body>
+</html>
