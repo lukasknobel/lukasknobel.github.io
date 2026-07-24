@@ -22,7 +22,7 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Structured Dynamics project preview">
-  <meta property="article:published_time" content="2026-06-19T00:00:00.000Z">
+  <meta property="article:published_time" content="2026-07-23T00:00:00.000Z">
   <meta property="article:author" content="Lukas Knobel">
   <meta property="article:section" content="Research">
   <meta property="article:tag" content="structured dynamics">
@@ -42,10 +42,9 @@
   <meta name="citation_author" content="Knobel, Lukas">
   <meta name="citation_author" content="Zisserman, Andrew">
   <meta name="citation_author" content="Asano, Yuki M.">
-  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_publication_date" content="2026-07-23">
   <meta name="citation_conference_title" content="Preprint">
-  <!-- TODO: update once PDF/arXiv URL is public. -->
-  <meta name="citation_pdf_url" content="static/pdfs/paper.pdf">
+  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2607.21576">
   
   <!-- Additional SEO -->
   <meta name="theme-color" content="#356b45">
@@ -222,7 +221,7 @@
         }
       }
     ],
-    "datePublished": "2026-06-19",
+    "datePublished": "2026-07-23",
     "publisher": {
       "@type": "Organization",
       "name": "Preprint"
@@ -291,19 +290,12 @@
 
               <div class="column has-text-centered">
                 <div class="publication-links">
-                  <!-- TODO: replace this placeholder with the arXiv URL once the preprint is public.
+                  <!-- Arxiv link. -->
                   <span class="link-block">
-                    <a href="." class="external-link button is-normal is-rounded is-dark">
+                    <a href="https://arxiv.org/abs/2607.21576" class="external-link button is-normal is-rounded is-dark">
                       <span class="icon"><i class="ai ai-arxiv"></i></span>
                       <span>arXiv</span>
                     </a>
-                  </span>
-                  -->
-                  <span class="link-block">
-                    <button type="button" class="external-link button is-normal is-rounded is-dark" disabled aria-disabled="true">
-                      <span class="icon"><i class="ai ai-arxiv"></i></span>
-                      <span>arXiv (available soon)</span>
-                    </button>
                   </span>
 
                   <!-- Code repository. -->
@@ -712,7 +704,15 @@
             <span class="copy-text">Copy</span>
           </button>
         </div>
-        <pre id="bibtex-code"><code>coming soon...</code></pre>
+        <pre id="bibtex-code"><code>@misc{knobel2026sdm,
+      title={Self-Supervised Learning of Structured Dynamics from Videos}, 
+      author={Lukas Knobel and Andrew Zisserman and Yuki M. Asano},
+      year={2026},
+      eprint={2607.21576},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2607.21576}, 
+}</code></pre>
       </div>
     </section>
     <!--End BibTex citation -->
@@ -855,5 +855,12 @@
       document.querySelectorAll('[data-deck]').forEach(initialiseDeck);
     });
   </script>
+  <!-- Cloudflare Web Analytics -->
+  <script
+    type="module"
+    src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon='{"token":"70a1b7f30e7c4bd1b6f7b1fa611f305f"}'
+  ></script>
+  <!-- End Cloudflare Web Analytics -->
 </body>
 </html>
