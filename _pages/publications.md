@@ -2,7 +2,7 @@
 layout: page
 permalink: /publications/
 title: publications
-description: 
+meta_description: Publications by Lukas Knobel on self-supervised learning, computer vision, video understanding, and multimodal foundation models.
 nav: true
 nav_order: 2
 ---
