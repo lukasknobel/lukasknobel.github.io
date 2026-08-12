@@ -169,6 +169,49 @@ ul.task-list input[type="checkbox"] {
   }
 }
 
+
+.repo-link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.repo-fallback {
+  width: 100%;
+  min-height: 120px;
+  padding: 1.25rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 0.25rem;
+  text-align: left;
+  background: var(--global-bg-color);
+  color: var(--global-text-color);
+
+  .repo-fallback-name,
+  .repo-fallback-path,
+  .repo-fallback-action {
+    display: block;
+  }
+
+  .repo-fallback-name {
+    margin-bottom: 0.25rem;
+    font-size: 1.1rem;
+    color: var(--global-theme-color);
+  }
+
+  .repo-fallback-path {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--global-text-color-light);
+  }
+
+  .repo-fallback-action {
+    font-size: 0.9rem;
+    color: var(--global-theme-color);
+  }
+}
+
 // Social (bottom)
 
 .social {

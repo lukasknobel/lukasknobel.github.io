@@ -7,6 +7,7 @@ subtitle: <a href='https://www.utn.de/en/departments/department-engineering/funa
 profile:
   align: right
   image: prof_pic.jpg
+  image_alt: Portrait of Lukas Knobel
   image_circular: false # crops the image to make it circular
   more_info: >
     

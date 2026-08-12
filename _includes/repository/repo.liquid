@@ -32,16 +32,37 @@
 {% endif %}
 
 <div class="repo p-2 text-center">
-  <a href="https://github.com/{{ include.repository }}">
+  <a href="https://github.com/{{ include.repository }}" class="repo-link">
     <img
       class="only-light w-100"
       alt="{{ include.repository }}"
       src="{{ site.external_services.github_readme_stats_url }}/api/pin/?username={{ repo_url[0] }}&repo={{ repo_url[1] }}&theme={{ site.repo_theme_light }}&locale={{ lang }}&show_owner={{ show_owner }}&description_lines_count={{ max_lines }}"
+      onerror="this.hidden=true; this.nextElementSibling.hidden=false;"
     >
+
+    <div class="repo-fallback only-light" hidden>
+      <strong class="repo-fallback-name">{{ repo_url[1] }}</strong>
+      <span class="repo-fallback-path">{{ include.repository }}</span>
+      <span class="repo-fallback-action">
+        <i class="fa-brands fa-github"></i>
+        View repository on GitHub
+      </span>
+    </div>
+
     <img
       class="only-dark w-100"
       alt="{{ include.repository }}"
       src="{{ site.external_services.github_readme_stats_url }}/api/pin/?username={{ repo_url[0] }}&repo={{ repo_url[1] }}&theme={{ site.repo_theme_dark }}&locale={{ lang }}&show_owner={{ show_owner }}&description_lines_count={{ max_lines }}"
+      onerror="this.hidden=true; this.nextElementSibling.hidden=false;"
     >
+
+    <div class="repo-fallback only-dark" hidden>
+      <strong class="repo-fallback-name">{{ repo_url[1] }}</strong>
+      <span class="repo-fallback-path">{{ include.repository }}</span>
+      <span class="repo-fallback-action">
+        <i class="fa-brands fa-github"></i>
+        View repository on GitHub
+      </span>
+    </div>
   </a>
 </div>
