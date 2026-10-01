@@ -72,6 +72,9 @@ ninja.data = [{
           section: "News",},{id: "news-together-with-the-fundamental-ai-lab-i-spent-10-days-in-japan-visiting-research-groups-as-part-of-the-jst-aspire-program-in-tokyo-i-presented-my-ongoing-work-at-the-aspire-workshop-and-research-discussions-at-institutes-including-aist-sakana-ai-and-sony-ai",
           title: 'Together with the Fundamental AI Lab, I spent 10 days in Japan visiting...',
           description: "",
+          section: "News",},{id: "news-our-paper-i-have-a-stream-making-self-supervised-learning-work-on-continuous-video-has-been-accepted-at-neurips2026",
+          title: 'Our paper “I Have a Stream: Making Self-Supervised Learning Work on Continuous Video”...',
+          description: "",
           section: "News",},{
         id: 'social-email',
         title: 'email',
