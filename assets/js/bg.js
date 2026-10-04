@@ -4,8 +4,8 @@
    A slowly drifting field of small particles linked by faint lines.
    A left click on empty space opens a short-lived well that gathers
    nearby particles for about a second before fading out. Clicks on
-   real controls (links, buttons, inputs) are ignored, and pressing on
-   text keeps normal selection behaviour.
+   content panels and real controls are ignored. The effect waits for
+   a completed click or tap, so touch scrolling does not open a well.
 
    The layer is a fixed full-viewport canvas sitting behind the content
    (the #bg element). It is decorative only (aria-hidden), follows the
@@ -26,7 +26,7 @@
 
   var env = { W: 0, H: 0, t: 0, ink: null };
 
-function readVar(name) {
+  function readVar(name) {
     var v = getComputedStyle(document.documentElement).getPropertyValue(name);
     return v ? v.trim() : "";
   }
@@ -59,14 +59,14 @@ function readVar(name) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
-// Clicks on real controls (links, buttons) are ignored by click effects
-  function isControl(e) {
-    return !!(e.target && e.target.closest && e.target.closest("a, button, summary, [role=button], input, textarea"));
+  // Content panels and controls keep their normal pointer behaviour.
+  function isContent(e) {
+    return !!(e.target && e.target.closest && e.target.closest(".box, .repo, a, button, summary, [role=button], input, textarea, select, label"));
   }
 
   // Left button only (touch counts as left)
   function isLeftClick(e) {
-    return e.button === 0 && !isControl(e);
+    return e.button === 0 && e.detail > 0 && !isContent(e);
   }
 
 // Track an event listener so an engine can remove it on teardown
@@ -80,8 +80,12 @@ function readVar(name) {
     var off = [];
     var P = [];
     var wells = [];
+    var worldW = env.W;
+    var worldH = env.H;
     function build() {
       P = [];
+      worldW = env.W;
+      worldH = env.H;
       var count = env.W * env.H < 500000 ? 48 : 76;
       for (var i = 0; i < count; i++) {
         P.push({
@@ -92,21 +96,27 @@ function readVar(name) {
         });
       }
     }
-    function onDown(e) {
+    function onClick(e) {
       if (reduced || hidden || !isLeftClick(e)) { return; }
       wells.push({ x: e.clientX, y: e.clientY, t0: env.t });
       if (wells.length > 5) { wells.shift(); }
     }
-    off.push(track(window, "pointerdown", onDown, { passive: true }));
-    function frame() {
+    off.push(track(window, "click", onClick, { passive: true }));
+    function resizeWorld() {
+      // Keep particle coordinates and velocities. Shrinking the viewport
+      // clips the field rather than wrapping hidden particles into view.
+      worldW = Math.max(worldW, env.W);
+      worldH = Math.max(worldH, env.H);
+    }
+    function frame(advance) {
       ctx.clearRect(0, 0, env.W, env.H);
       var i, j, a, b;
-      for (i = 0; i < P.length; i++) {
+      for (i = 0; advance && i < P.length; i++) {
         a = P[i];
         a.x += a.vx;
         a.y += a.vy;
-        if (a.x < -20) { a.x = env.W + 20; } else if (a.x > env.W + 20) { a.x = -20; }
-        if (a.y < -20) { a.y = env.H + 20; } else if (a.y > env.H + 20) { a.y = -20; }
+        if (a.x < -20) { a.x = worldW + 20; } else if (a.x > worldW + 20) { a.x = -20; }
+        if (a.y < -20) { a.y = worldH + 20; } else if (a.y > worldH + 20) { a.y = -20; }
         for (var w = 0; w < wells.length; w++) {
           var well = wells[w];
           var wage = (env.t - well.t0) / 1200;
@@ -178,6 +188,7 @@ function readVar(name) {
     }
     return {
       build: build,
+      resize: resizeWorld,
       frame: frame,
       destroy: function () { for (var i = 0; i < off.length; i++) { off[i](); } }
     };
@@ -190,7 +201,7 @@ function readVar(name) {
     rafId = null;
     if (hidden || reduced) { return; }
     env.t = t;
-    engine.frame(t);
+    engine.frame(true);
     rafId = requestAnimationFrame(loop);
   }
 
@@ -200,7 +211,7 @@ function readVar(name) {
         cancelAnimationFrame(rafId);
         rafId = null;
       }
-      if (!hidden) { engine.frame(env.t); }
+      if (!hidden) { engine.frame(false); }
     } else if (rafId === null) {
       rafId = requestAnimationFrame(loop);
     }
@@ -220,14 +231,12 @@ function readVar(name) {
   }
   window.addEventListener("resize", function () {
     resize();
-    engine.build();
-    if (reduced) {
-      engine.frame(env.t);
-    }
+    engine.resize();
+    if (!hidden) { engine.frame(false); }
   });
   var mo = new MutationObserver(function () {
     syncTheme();
-    if (reduced && !hidden) { engine.frame(env.t); }
+    if (reduced && !hidden) { engine.frame(false); }
   });
   mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
