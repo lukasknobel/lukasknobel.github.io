@@ -1,0 +1,101 @@
+---
+sitemap: false
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="Lukas Knobel">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://lukasknobel.github.io/cv/">
+  <link rel="icon" type="image/png" href="../../assets/img/lk.png">
+  <meta name="google-site-verification" content="GV7I79S9bYiKM3WF2Bn1OnAF85SOyY6NDSx35iEPdzI">
+  <title>Lukas Knobel — CV</title>
+  <meta name="description" content="CV of Lukas Knobel — education and professional experience.">
+  <meta property="og:site_name" content="Lukas Knobel">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Lukas Knobel — CV">
+  <meta property="og:url" content="https://lukasknobel.github.io/cv/">
+  <meta property="og:description" content="CV of Lukas Knobel — education and professional experience.">
+  <meta property="og:locale" content="en">
+  <meta property="og:image" content="https://lukasknobel.github.io/assets/img/og_image.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Lukas Knobel — CV">
+  <meta name="twitter:description" content="CV of Lukas Knobel — education and professional experience.">
+  <meta name="twitter:image" content="https://lukasknobel.github.io/assets/img/og_image.png">
+  <style>
+    :root {
+      --bg: #111111;
+      --ink: #f2f2f2;
+      --body: #c8c8c8;
+      --muted: #8f8f8f;
+      --faint: #888888;
+      --hair: #2c2c2c;
+      --mono: ui-monospace, "SF Mono", Consolas, "Roboto Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--mono); font-size: 13px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--ink); text-decoration: none; font-weight: 700; border-bottom: 1px solid var(--ink); }
+    a:hover { opacity: .6; box-shadow: 0 1px 0 0 var(--ink); }
+
+    .shell { max-width: 780px; margin: 0 auto; padding: 36px 24px 64px; }
+    .nav { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 11px; letter-spacing: .1em; margin-bottom: 20px; }
+    .nav .cur { font-weight: 700; }
+
+    .box { border: 1px solid var(--ink); padding: 18px 20px; background: #111111; }
+
+    .sec { margin-top: 24px; }
+    .sec:first-of-type { margin-top: 0; }
+    .sec .sb { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); letter-spacing: .1em; margin-bottom: 12px; }
+    .sec .sb b { color: var(--ink); font-weight: 700; letter-spacing: .14em; }
+
+    .nrow { display: flex; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--hair); }
+    .nrow .d { flex: none; width: 76px; color: var(--muted); font-size: 12px; padding-top: 1px; font-style: italic; }
+    .nrow p { margin: 0; color: var(--body); }
+
+    @media (max-width: 640px) {
+      .nrow { flex-direction: column; gap: 2px; }
+      .nrow .d { width: auto; padding-top: 0; }
+    }
+    .foot { margin-top: 36px; color: var(--muted); font-size: 11px; letter-spacing: 0.4px; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="nav">
+      <a href="index.html">HOME</a>
+      <a href="publications.html">PUBLICATIONS</a>
+      <span class="cur">CV</span>
+      <a href="code.html">CODE</a>
+    </div>
+
+    <div class="sec">
+      <div class="sb"><b>[ EDUCATION ]</b><span>01</span></div>
+      <div class="box">
+        <div data-list="cv-education">
+          <template data-item>
+            <div class="nrow"><span class="d">__PERIOD__</span><p><b>__TITLE__</b> — __PLACE__</p></div>
+          </template>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sb"><b>[ PROFESSIONAL EXPERIENCE ]</b><span>02</span></div>
+      <div class="box">
+        <div data-list="cv-experience">
+          <template data-item>
+            <div class="nrow"><span class="d">__PERIOD__</span><p><b>__TITLE__</b> — __PLACE__</p></div>
+          </template>
+        </div>
+      </div>
+    </div>
+    <footer class="foot"><span data-slot="footer"></span>
+  </div>
+  <script>{% include variants-site-data.js %}</script>
+  <script src="../../assets/js/render.js?v=1"></script>
+  <!-- Cloudflare Web Analytics -->
+  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "70a1b7f30e7c4bd1b6f7b1fa611f305f"}'></script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% assign content = site.data.site_content %}
+{% case include.kind %}
+{% when 'pubs' %}
+  {% assign papers = content.papers %}
+  {% if include.selected %}{% assign papers = papers | where: 'selected', true %}{% endif %}
+  {% for paper in papers %}
+    <details class="pub-entry" id="{{ paper.id | escape }}">
+    <summary class="pub">
+      <span class="y">{{ paper.year | escape }}</span>
+      <span class="ta">
+        <span class="t">{{ paper.title | escape }}</span>
+        <span class="a">{% include site-authors.liquid authors=paper.authors %}</span>
+      </span>
+      <span class="v">{{ paper.venue | escape }}</span>
+      <span class="l"><span class="abs">Abs</span><span class="sep"> | </span>{% assign link_labels = 'PDF,Code,Project' | split: ',' %}{% assign has_link = false %}{% for label in link_labels %}{% if paper.links[label] %}{% if has_link %}<span class="sep"> | </span>{% endif %}<a href="{{ paper.links[label] | escape }}">{{ label }}</a>{% assign has_link = true %}{% endif %}{% endfor %}</span>
+    </summary>
+    <div class="pub-abs">{{ paper.abstract | escape }}</div>
+    </details>
+  {% endfor %}
+{% when 'news' %}
+  {% assign news_limit = include.limit | default: content.news.size %}
+  {% for item in content.news limit: news_limit %}
+    <div class="nrow"><span class="d">{{ item.date | date: '%-d %b %Y' }}</span><p>{{ item.text }}</p></div>
+  {% endfor %}
+{% when 'socials' %}
+  {% for social in content.socials %}{% unless forloop.first %}<span class="sep"> · </span>{% endunless %}<a href="{{ social.url | escape }}">{{ social.label | escape }}</a>{% endfor %}
+{% when 'repos' %}
+  {% for repo in content.repos %}
+    <div class="repo" data-repo="{{ repo.url | remove_first: 'https://github.com/' | escape }}">
+      <a class="rname" href="{{ repo.url | escape }}">{{ repo.name | escape }}</a>
+      <p class="rdesc">{{ repo.desc | escape }}</p>
+      <p class="rstats"></p>
+    </div>
+  {% endfor %}
+{% when 'cv-education', 'cv-experience' %}
+  {% assign section = include.kind | remove_first: 'cv-' %}
+  {% for item in content.cv[section] %}
+    <div class="nrow"><span class="d">{{ item.period | escape }}</span><p><b>{{ item.title | escape }}</b> — {{ item.place | escape }}</p></div>
+  {% endfor %}
+{% endcase %}

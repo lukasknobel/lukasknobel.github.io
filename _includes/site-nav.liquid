@@ -1,0 +1,12 @@
+<nav class="nav" aria-label="Primary">
+  {% for item in site.data.navigation %}
+    {% if page.section == item.section %}
+      <span class="cur" aria-current="page">{{ item.label | escape }}</span>
+    {% else %}
+      <a href="{{ item.url | relative_url }}">{{ item.label | escape }}</a>
+    {% endif %}
+    {% if page.section == 'news' and item.section == 'publications' %}
+      <span class="cur" aria-current="page">NEWS</span>
+    {% endif %}
+  {% endfor %}
+</nav>

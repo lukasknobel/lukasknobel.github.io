@@ -1,0 +1,157 @@
+# Shared content for the personal website and style previews.
+# Keep papers and news newest first. Profile bio/org and news text support HTML.
+profile:
+  name: Lukas Knobel
+  role: ELLIS PhD candidate
+  org: <a href="https://fundamentalailab.github.io/">Fundamental AI Lab</a>, University of Technology Nuremberg, Germany
+  focus: Self-supervised & representation learning for images and video
+  image: ../../assets/img/prof_pic.jpg
+  footer: '&copy; 2026 Lukas Knobel'
+  bio: I am an <a href='https://ellis.eu/'>ELLIS PhD candidate</a> in the Fundamental AI Lab at the University of Technology Nuremberg, supervised by <a href='https://yukimasano.github.io/'>Yuki Asano</a>. I am co-supervised by <a href='https://scholar.google.com/citations?user=UZ5wscMAAAAJ&hl=en'>Andrew Zisserman</a> (Visual Geometry Group) at the University of Oxford. Previously, I worked as a Machine Learning Scientist at TNO in the Netherlands. My academic background includes an MSc in Artificial Intelligence from the University of Amsterdam and a Bachelor&rsquo;s in Computer Engineering, completed in collaboration with Airbus. My research focuses on self-supervised learning for vision and multimodal foundation models.
+coauthors:
+- name: Yeskendir Koishekenov
+  url: https://yeskendirk.github.io/
+- name: Tengda Han
+  url: https://tengdahan.github.io/
+- name: Yuki M. Asano
+  url: https://yukimasano.github.io/
+- name: Yuki Asano
+  url: https://yukimasano.github.io/
+- name: Andrew Zisserman
+  url: https://scholar.google.com/citations?user=UZ5wscMAAAAJ&hl=en
+papers:
+- id: martinovic2026streammae
+  selected: true
+  year: '2026'
+  title: 'I Have a Stream: Making Self-Supervised Learning Work on Continuous Video'
+  authors: Ivan Martinović, Lukas Knobel, and Yuki M. Asano
+  venue: NeurIPS 2026
+  links:
+    PDF: https://arxiv.org/pdf/2609.40333.pdf
+    Project: https://martinovicivan.github.io/StreamMAE/
+  abstract: 'Self-supervised learning draws inspiration from infant visual development, yet standard training pipelines bear little resemblance to it: images are independently sampled and globally shuffled across epochs. We study self-supervised learning from continuous video streams, where frames are consumed in temporal order using strict sliding-window batches, without global reshuffling or multi-epoch replay. To this end, we construct WT++, a 95-hour urban walking-tour video dataset for streaming pretraining. Combined with a comprehensive evaluation suite we find that contrastive and distillation-based methods struggle in this setting, while MAE is more robust but still falls short of standard i.i.d. pretraining. We find that high inter-batch similarity, caused by sliding-window consumption across consecutive batches, does not explain this gap. The main challenge is high intra-batch similarity, where frames within each batch are near-duplicates. To mitigate this, we propose StreamMAE,
+    which preserves the core MAE reconstruction objective while adapting the input pipeline with stream-aware regularization and motion-biased crop selection. StreamMAE outperforms streaming baselines, matches i.i.d. MAE trained on the same video data, remains competitive with ImageNet-pretrained MAE, and scales positively as the pretraining stream grows from 12 to 95 hours.'
+- id: knobel2026sdm
+  selected: true
+  year: '2026'
+  title: Self-Supervised Learning of Structured Dynamics from Videos
+  authors: Lukas Knobel, Andrew Zisserman, and Yuki M. Asano
+  venue: Preprint
+  links:
+    PDF: https://arxiv.org/pdf/2607.21576.pdf
+    Project: https://lukasknobel.github.io/projects/StructuredDynamics
+  abstract: 'Understanding motion in video is a fundamental challenge for visual learning, as frame-to-frame change entangles two sources of dynamics: camera motion and object motion. This decomposition has remained underexplored in representation learning, partly because these factors are tightly coupled in natural videos and difficult to supervise separately. Yet recovering it is important for learning robust motion representations that separate meaningful object dynamics from camera-induced variation. We study whether such structured motion representations can be recovered from frozen features of a pretrained image vision transformer. We propose the Structured Dynamics Model (SDM), which explicitly separates the dominant source of temporal change from residual dynamics through future-feature prediction, rather than representing video change with a single entangled latent or with unstructured, spatially dense transition tokens. Training combines self-supervised learning on real video with
+    weak supervision of scene dynamics on synthetic Kubric data. We evaluate SDM on ProbeMotion, a new evaluation suite spanning synthetic and real videos with camera motion, object motion, and combined dynamics. SDM outperforms backbone baselines using global CLS or average-pooled features, and compares favorably to strongly supervised representations such as VGGT on several probes, despite using substantially weaker supervision. These results suggest that pretrained image models can be readily repurposed into structured video-dynamics representations, providing a useful inductive bias for learning and analyzing latent video dynamics.'
+- id: venkataramanan2026franca
+  selected: true
+  year: '2026'
+  title: 'Franca: Nested matryoshka clustering for scalable visual representation learning'
+  authors: Shashanka Venkataramanan*, Valentinos Pariza*, Mohammadreza Salehi, Lukas Knobel, Spyros Gidaris, Elias Ramzi, Andrei Bursuc, and Yuki M. Asano
+  venue: CVPR 2026
+  links:
+    PDF: https://arxiv.org/pdf/2507.14137.pdf
+    Code: https://github.com/valeoai/Franca
+  abstract: 'We present Franca (pronounced Fran-ka): free one; the first fully open-source (data, code, weights) vision foundation model that matches and in many cases surpasses the performance of state-of-the-art proprietary models, e.g., DINOv2, CLIP, SigLIPv2, etc. Our approach is grounded in a transparent training pipeline inspired by Web-SSL and uses publicly available data: ImageNet-21K and a subset of ReLAION-2B. Beyond model release, we tackle critical limitations in SSL clustering methods. While modern models rely on assigning image features to large codebooks via clustering algorithms like Sinkhorn-Knopp, they fail to account for the inherent ambiguity in clustering semantics. To address this, we introduce a parameter-efficient, multi-head clustering projector based on nested Matryoshka representations. This design progressively refines features into increasingly fine-grained clusters without increasing the model size, enabling both performance and memory efficiency. Additionally,
+    we propose a novel positional disentanglement strategy that explicitly removes positional biases from dense representations, thereby improving the encoding of semantic content. This leads to consistent gains on several downstream benchmarks, demonstrating the utility of cleaner feature spaces. Our contributions establish a new standard for transparent, high-performance vision models and open a path toward more reproducible and generalizable foundation models for the broader AI community.'
+- id: knobel2024learning
+  selected: true
+  year: '2024'
+  title: Learning to Count without Annotations
+  authors: Lukas Knobel, Tengda Han*, and Yuki M. Asano*
+  venue: CVPR 2024
+  links:
+    PDF: https://arxiv.org/pdf/2307.08727.pdf
+    Code: https://github.com/lukasknobel/SelfCollages
+  abstract: While recent supervised methods for reference-based object counting continue to improve the performance on benchmark datasets, they have to rely on small datasets due to the cost associated with manually annotating dozens of objects in images. We propose UnCounTR, a model that can learn this task without requiring any manual annotations. To this end, we construct "Self-Collages", images with various pasted objects as training samples, that provide a rich learning signal covering arbitrary object types and counts. Our method builds on existing unsupervised representations and segmentation techniques to successfully demonstrate for the first time the ability of reference-based counting without manual supervision. Our experiments show that our method not only outperforms simple baselines and generic models such as FasterRCNN and DETR, but also matches the performance of supervised counting models in some domains.
+- id: cosma2023geometric
+  selected: false
+  year: '2023'
+  title: Geometric Superpixel Representations for Efficient Image Classification with Graph Neural Networks
+  authors: Radu A. Cosma*, Lukas Knobel*, Putri A. Van der Linden, David M. Knigge, and Erik J. Bekkers
+  venue: ICCV 2023 - Visual Inductive Priors for Data-Efficient Deep Learning Workshop
+  links:
+    PDF: https://openaccess.thecvf.com/content/ICCV2023W/VIPriors/papers/Cosma_Geometric_Superpixel_Representations_for_Efficient_Image_Classification_with_Graph_Neural_ICCVW_2023_paper.pdf
+    Code: https://github.com/lukasknobel/ShapeGNN
+  abstract: While Convolutional Neural Networks and Vision Transformers are the go-to solutions for image classification, their model sizes make them expensive to train and deploy. Alternatively, input complexity can be reduced following the intuition that adjacent similar pixels contain redundant information. This prior can be exploited by clustering such pixels into superpixels and connecting adjacent superpixels with edges, resulting in a sparse graph representation on which Graph Neural Networks (GNNs) can operate efficiently. Although previous work clearly highlights the computational efficiency of this approach, this prior can be overly restrictive and, as a result, performance is lacking compared to contemporary dense vision methods. In this work, we propose to extend this prior by incorporating shape information into the individual superpixel representations. This is achieved through a separate, patch-level GNN. Together with enriching the previously explored appearance and pose
+    information of superpixels and further architectural changes, our best model, ShapeGNN, surpasses the previous state-of-the-art in superpixel-based image classification on CIFAR-10 by a significant margin. We also present an optimised pipeline for efficient image-to-graph transformation and show the viability of training end-to-end on high-resolution images on ImageNet-1k.
+- id: sarah_de_boer_2022_6574637
+  selected: false
+  year: '2022'
+  title: Reproducibility study of "Data-Driven Methods for Balancing Fairness and Efficiency in Ride-Pooling"
+  authors: Sarah De Boer*, Radu Alexandru Cosma*, Lukas Knobel*, Yeskendir Koishekenov*, and Benjamin Shaffrey*
+  venue: ML Reproducibility Challenge 2021 (Fall Edition)
+  links:
+    PDF: https://openreview.net/pdf?id=UU4rj9QBzvu
+    Code: https://github.com/reproducibilityaccount/reproducing-ridesharing
+  abstract: 'Our work attempts to verify two methods to mitigate forms of inequality in ride‐pooling platforms proposed in the paper Data-Driven Methods for Balancing Fairness and Efficiency in Ride-Pooling: (1) integrating fairness constraints into the objective functions and (2) redistributing income of drivers. We extend this paper by testing for robustness to a change in the neighbourhood selection process by using actual Manhattan neighbour‐hoods and we use corresponding demographic data to examine differences in service based on ethnicity.'
+news:
+- date: '2026-09-24'
+  text: 'Our paper "<a href=''https://martinovicivan.github.io/StreamMAE/''>I Have a Stream: Making Self-Supervised Learning Work on Continuous Video</a>" has been accepted at NeurIPS2026!'
+- date: '2026-04-14'
+  text: Together with the Fundamental AI Lab, I spent 10 days in Japan visiting research groups as part of the JST ASPIRE program. In Tokyo, I presented my ongoing work at the ASPIRE workshop and research discussions at institutes including AIST, Sakana AI, and Sony AI.
+- date: '2026-02-21'
+  text: 'Our paper "Franca: Nested Matryoshka Clustering for Scalable Visual Representation Learning" has been accepted at CVPR2026!'
+- date: '2025-02-10'
+  text: I've been admitted to the <a href='https://ellis.eu/'>ELLIS</a> PhD program, jointly supervised by <a href='https://yukimasano.github.io/'>Yuki Asano</a> (University of Technology Nuremberg, Germany) and <a href='https://scholar.google.com/citations?user=UZ5wscMAAAAJ&hl=en'>Andrew Zisserman</a> (University of Oxford, UK).
+- date: '2024-11-01'
+  text: I've started as a PhD candidate in the <a href='https://fundamentalailab.github.io/'>Fundamental AI Lab</a> at the University of Technology Nuremberg, supervised by <a href='https://yukimasano.github.io/'>Yuki Asano</a>!
+- date: '2024-02-26'
+  text: Our paper "Learning to Count without Annotations" has been accepted at CVPR2024!
+- date: '2023-08-14'
+  text: I joined <a href='https://www.tno.nl/en/'>TNO</a>’s Intelligent Imaging group as a Machine Learning Scientist.
+- date: '2023-08-11'
+  text: I graduated with distinction from the MSc Artificial Intelligence programme at the University of Amsterdam.
+- date: '2023-07-31'
+  text: Our paper "Geometric Superpixel Representations for Efficient Image Classification with Graph Neural Networks" has been accepted at the <a href='https://vipriors.github.io/'>4th Visual Inductive Priors for Data-Efficient Deep Learning Workshop</a> at ICCV2023.
+- date: '2023-04-26'
+  text: I am visiting <a href='https://tengdahan.github.io/'>Tengda Han</a> at the <a href='https://www.robots.ox.ac.uk/~vgg/'>Visual Geometry Group</a> of the University of Oxford.
+- date: '2023-01-13'
+  text: I have been admitted to the <a href='https://ellis.eu/'>ELLIS</a> MSc Honours Programme at the University of Amsterdam.
+- date: '2022-10-31'
+  text: I am starting my Master’s thesis on self-supervised visual counting under the joint supervision of <a href='https://yukimasano.github.io/'>Yuki M. Asano</a> and <a href='https://tengdahan.github.io/'>Tengda Han</a>.
+- date: '2022-10-31'
+  text: I am going to be a teaching assistant for the <a href='https://cl-illc.github.io/nlp1-2022/'>Natural Language Processing</a> course in the Master’s programme in Artificial Intelligence.
+- date: '2022-05-01'
+  text: Our reproducibility study of "Data-Driven Methods for Balancing Fairness and Efficiency in Ride-Pooling" got accepted at the ML Reproducibility Challenge 2021.
+- date: '2021-09-01'
+  text: I am starting my Masters in Artificial Intelligence at the University of Amsterdam.
+socials:
+- label: Email
+  url: mailto:lukasknbl@gmail.com
+- label: Google Scholar
+  url: https://scholar.google.com/citations?user=egwx6IMAAAAJ
+- label: GitHub
+  url: https://github.com/lukasknobel
+- label: LinkedIn
+  url: https://www.linkedin.com/in/lukas-knobel
+repos:
+- name: SelfCollages
+  url: https://github.com/lukasknobel/SelfCollages
+  desc: Learning to Count without Annotations
+- name: ShapeGNN
+  url: https://github.com/lukasknobel/ShapeGNN
+  desc: Geometric Superpixel Representations for Efficient Image Classification with Graph Neural Networks
+- name: StructuredDynamics
+  url: https://github.com/lukasknobel/StructuredDynamics
+  desc: Self-Supervised Learning of Structured Dynamics from Videos
+cv:
+  education:
+  - period: 2024–now
+    title: PhD
+    place: Fundamental AI Lab, University of Technology Nuremberg, Germany
+  - period: 2021–2023
+    title: Artificial Intelligence, MSc
+    place: University of Amsterdam, Netherlands
+  - period: 2017–2021
+    title: Cooperative Degree Programme in Computer Engineering, BSc
+    place: University of Applied Sciences Bremen, Germany
+  experience:
+  - period: 2023–2024
+    title: Machine Learning Scientist
+    place: TNO, the Hague, Netherlands
+  - period: 2022–2023
+    title: Teaching Assistant
+    place: University of Amsterdam, Netherlands
+  - period: 2017–2021
+    title: Dual student
+    place: Airbus, Bremen, Germany

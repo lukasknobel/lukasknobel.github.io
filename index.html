@@ -1,0 +1,58 @@
+---
+sitemap: true
+layout: site
+section: home
+title: Lukas Knobel
+description: Lukas Knobel — ELLIS PhD candidate in the Fundamental AI Lab at the University of Technology Nuremberg. Research on self-supervised and representation learning for images and video.
+---
+<div class="box head-box">
+  <div class="ph">
+    <picture>
+      <source type="image/webp" srcset="{{ '/assets/img/prof_pic_small-480.webp' | relative_url }}">
+      <img src="{{ '/assets/img/prof_pic_small.jpg' | relative_url }}" alt="Portrait of Lukas Knobel" fetchpriority="high">
+    </picture>
+  </div>
+  <div>
+    <h1>{{ site.data.site_content.profile.name | escape }}</h1>
+    <p class="rl">{{ site.data.site_content.profile.role | escape }}</p>
+    <p class="org">{{ site.data.site_content.profile.org }}</p>
+    <p class="fo">{{ site.data.site_content.profile.focus | escape }}</p>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sb"><h2>[ ABOUT ]</h2><span aria-hidden="true">01</span></div>
+  <div class="box">
+    <p>{{ site.data.site_content.profile.bio }}</p>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sb"><h2>[ LATEST NEWS ]</h2><span aria-hidden="true">02</span></div>
+  <div class="box">
+    <div data-list="news" data-limit="5">
+      {% include site-list.liquid kind="news" limit=5 %}
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sb"><h2>[ SELECTED PUBLICATIONS ]</h2><span aria-hidden="true">03</span></div>
+  <div class="box">
+    <div data-list="pubs" data-selected="true">
+      {% include site-list.liquid kind="pubs" selected=true %}
+    </div>
+    <p class="more">→ <a href="{{ '/publications/' | relative_url }}">full list</a></p>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sb"><h2>[ CONTACT ]</h2><span aria-hidden="true">04</span></div>
+  <div class="box">
+    <div class="kv">
+      <span class="k">SOCIALS</span>
+      <span data-list="socials">
+      {% include site-list.liquid kind="socials" %}</span>
+    </div>
+  </div>
+</div>

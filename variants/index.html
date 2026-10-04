@@ -1,0 +1,249 @@
+---
+sitemap: false
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Template lab — Lukas Knobel</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      display: flex;
+      flex-direction: column;
+      background: #14161c;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    #strip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 46px;
+      padding: 0 12px;
+      background: #14161c;
+      border-bottom: 1px solid #2a2d37;
+      color: #e7e9ef;
+      position: relative;
+      z-index: 100;
+      flex: none;
+    }
+
+    #vs-wrap { position: relative; }
+
+    #vs-btn {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 14px 7px 10px;
+      border: 1px solid #3a3e4c;
+      border-radius: 999px;
+      background: #1d2029;
+      color: #e7e9ef;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    #vs-btn:hover { border-color: #585e70; background: #232733; }
+    #vs-btn .orb {
+      width: 14px; height: 14px; border-radius: 50%; flex: none;
+      background: conic-gradient(#2563eb 0 25%, #ff4f12 25% 50%, #2743f0 50% 75%, #3ddc84 75% 100%);
+    }
+    #vs-btn .chev { font-size: 10px; opacity: .6; }
+
+    #vs-panel {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 312px;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+      background: #1d2029;
+      border: 1px solid #3a3e4c;
+      border-radius: 12px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, .5);
+      padding: 8px;
+    }
+    #vs-panel .vs-title {
+      font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: #8b90a0; padding: 8px 10px 6px;
+    }
+    #vs-panel button {
+      display: flex; align-items: center; gap: 10px; width: 100%;
+      padding: 8px 10px; margin: 1px 0;
+      border: 1px solid transparent; border-radius: 9px;
+      background: transparent; color: #e7e9ef; font: inherit; text-align: left; cursor: pointer;
+    }
+    #vs-panel button:hover { background: #262a36; border-color: #3a3e4c; }
+    #vs-panel button.active { border-color: #4c6ef5; background: #232838; }
+    #vs-panel .dot { width: 14px; height: 14px; border-radius: 4px; border: 1px solid rgba(255,255,255,.25); flex: none; }
+    #vs-panel .meta { min-width: 0; }
+    #vs-panel .nm { display: block; font-size: 13px; font-weight: 600; }
+    #vs-panel .tg { display: block; font-size: 11px; color: #8b90a0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #vs-panel .key { margin-left: auto; font-family: ui-monospace, Consolas, monospace; font-size: 10px; color: #6d7284; border: 1px solid #3a3e4c; border-radius: 4px; padding: 1px 5px; flex: none; }
+
+    #strip-right {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 14px;
+      font-size: 12px; color: #8b90a0;
+    }
+    #strip-right a { color: #aeb4c4; text-decoration: none; }
+    #strip-right a:hover { color: #fff; text-decoration: underline; }
+
+    #frame {
+      flex: 1;
+      border: 0;
+      width: 100%;
+      background: #fff;
+    }
+
+    @media (max-width: 640px) {
+      #strip-right .hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="strip">
+    <div id="vs-wrap">
+      <button id="vs-btn" type="button" aria-haspopup="true" aria-expanded="false">
+        <span class="orb" aria-hidden="true"></span>
+        <span id="vs-current">Template</span>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div id="vs-panel" hidden></div>
+    </div>
+    <div id="strip-right">
+      <span class="hint">local preview &middot; press 1 for the working set, a&ndash;z for the archive</span>
+      <a href="../" target="_blank" rel="noopener">open live site &#8599;</a>
+    </div>
+  </div>
+
+  <iframe id="frame" title="Template preview" src="minisite/"></iframe>
+
+  <script>
+    "use strict";
+
+    var VARIANTS = [
+      { id: "mainsite",  name: "Main site",          tag: "Type site + constellation background, theme toggle", src: "../", swatch: "#e3e7ee", key: "", group: "Base" },
+
+      { id: "typesite",  name: "Type Site",  tag: "Multi-page, type-only highlights, theme toggle", src: "minisite/", swatch: "#ffffff", key: "1", group: "Working set" },
+      { id: "typesite-404", name: "Type Site — 404", tag: "Working set, 404 fallback page", src: "minisite/404.html", swatch: "#ffffff", key: "", group: "Working set" },
+
+
+    ];
+
+    var STORAGE_KEY = "template-preview";
+    var frame = document.getElementById("frame");
+    var btn = document.getElementById("vs-btn");
+    var panel = document.getElementById("vs-panel");
+    var currentLabel = document.getElementById("vs-current");
+    var open = false;
+
+    function byId(id) {
+      for (var i = 0; i < VARIANTS.length; i++) {
+        if (VARIANTS[i].id === id) { return VARIANTS[i]; }
+      }
+      return null;
+    }
+
+    function buildPanel() {
+      var html = "";
+      var lastGroup = null;
+      VARIANTS.forEach(function (variant) {
+        if (variant.group !== lastGroup) {
+          html += '<div class="vs-title">' + variant.group + '</div>';
+          lastGroup = variant.group;
+        }
+        var keyBadge = variant.key ? '<span class="key">' + variant.key + '</span>' : "";
+        html +=
+          '<button type="button" data-id="' + variant.id + '">' +
+            '<span class="dot" style="background:' + variant.swatch + '"></span>' +
+            '<span class="meta"><span class="nm">' + variant.name + '</span>' +
+            '<span class="tg">' + variant.tag + '</span></span>' +
+            keyBadge +
+          '</button>';
+      });
+      panel.innerHTML = html;
+      var options = panel.querySelectorAll("button");
+      for (var i = 0; i < options.length; i++) {
+        options[i].addEventListener("click", function () {
+          select(this.getAttribute("data-id"), true);
+        });
+      }
+    }
+
+    function setActive(id) {
+      var options = panel.querySelectorAll("button");
+      for (var i = 0; i < options.length; i++) {
+        options[i].classList.toggle("active", options[i].getAttribute("data-id") === id);
+      }
+      var variant = byId(id);
+      if (variant) {
+        currentLabel.textContent = variant.name;
+      }
+    }
+
+    function setOpen(value) {
+      open = value;
+      panel.hidden = !open;
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+
+    function select(id, persist) {
+      var variant = byId(id);
+      if (!variant) { return; }
+      frame.src = variant.src;
+      if (persist) {
+        try {
+          localStorage.setItem(STORAGE_KEY, id);
+        } catch (e) { /* ignore */ }
+      }
+      setActive(id);
+      setOpen(false);
+    }
+
+    btn.addEventListener("click", function (event) {
+      event.stopPropagation();
+      setOpen(!open);
+    });
+
+    document.addEventListener("click", function (event) {
+      if (open && !document.getElementById("vs-wrap").contains(event.target)) {
+        setOpen(false);
+      }
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (event.target && (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA")) {
+        return;
+      }
+      for (var i = 0; i < VARIANTS.length; i++) {
+        if (VARIANTS[i].key && VARIANTS[i].key === event.key) {
+          select(VARIANTS[i].id, true);
+          break;
+        }
+      }
+    });
+
+    buildPanel();
+
+    var stored = null;
+    try {
+      stored = localStorage.getItem(STORAGE_KEY);
+    } catch (e) { /* ignore */ }
+
+    if (stored && byId(stored)) {
+      select(stored, false);
+    } else {
+      setActive("typesite");
+    }
+  </script>
+</body>
+</html>

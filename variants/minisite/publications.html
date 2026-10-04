@@ -1,0 +1,151 @@
+---
+sitemap: false
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="Lukas Knobel">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://lukasknobel.github.io/publications/">
+  <link rel="icon" type="image/png" href="../../assets/img/lk.png">
+  <meta name="google-site-verification" content="GV7I79S9bYiKM3WF2Bn1OnAF85SOyY6NDSx35iEPdzI">
+  <script>
+    (function () {
+      var mode = "auto";
+      try {
+        var v = localStorage.getItem("type-theme");
+        if (v === "light" || v === "dark" || v === "auto") { mode = v; }
+      } catch (e) {}
+      document.documentElement.setAttribute("data-theme", mode);
+    })();
+  </script>
+  <title>Lukas Knobel — Publications</title>
+  <meta name="description" content="Publications by Lukas Knobel — self-supervised learning, video understanding, and counting.">
+  <meta property="og:site_name" content="Lukas Knobel">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Lukas Knobel — Publications">
+  <meta property="og:url" content="https://lukasknobel.github.io/publications/">
+  <meta property="og:description" content="Publications by Lukas Knobel — self-supervised learning, video understanding, and counting.">
+  <meta property="og:locale" content="en">
+  <meta property="og:image" content="https://lukasknobel.github.io/assets/img/og_image.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Lukas Knobel — Publications">
+  <meta name="twitter:description" content="Publications by Lukas Knobel — self-supervised learning, video understanding, and counting.">
+  <meta name="twitter:image" content="https://lukasknobel.github.io/assets/img/og_image.png">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --ink: #111111;
+      --body: #333333;
+      --muted: #666666;
+      --faint: #767676;
+      --hair: #dddddd;
+      --mono: ui-monospace, "SF Mono", Consolas, "Roboto Mono", monospace;
+    }
+    :root[data-theme="dark"] {
+      --bg: #1a1a1a;
+      --ink: #ececec;
+      --body: #c4c4c4;
+      --muted: #a3a3a3;
+      --faint: #888888;
+      --hair: #333333;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root[data-theme="auto"] {
+        --bg: #1a1a1a;
+        --ink: #ececec;
+        --body: #c4c4c4;
+        --muted: #a3a3a3;
+        --faint: #888888;
+        --hair: #333333;
+      }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--mono); font-size: 13px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--ink); text-decoration: none; font-weight: 700; border-bottom: 1px solid var(--ink); }
+    a:hover { opacity: .6; box-shadow: 0 1px 0 0 var(--ink); }
+
+    .theme-toggle { position: fixed; top: 10px; right: 12px; z-index: 50; border: 1px solid var(--ink); background: var(--bg); color: var(--ink); font-family: var(--mono); font-size: 10px; letter-spacing: .12em; padding: 5px 10px; cursor: pointer; }
+    .theme-toggle:hover { background: var(--ink); color: var(--bg); box-shadow: none; }
+
+    .shell { max-width: 780px; margin: 0 auto; padding: 36px 24px 64px; }
+    .nav { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 11px; letter-spacing: .1em; margin-bottom: 20px; }
+    .nav .cur { font-weight: 700; }
+
+    .box { border: 1px solid var(--ink); padding: 18px 20px; background: var(--bg); }
+
+    .sec { margin-top: 0; }
+    .sec .sb { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); letter-spacing: .1em; margin-bottom: 12px; }
+    .sec .sb b { color: var(--ink); font-weight: 700; letter-spacing: .14em; }
+    .box p { margin: 0 0 10px; color: var(--body); }
+    .box p:last-child { margin-bottom: 0; }
+
+    .pub { display: grid; grid-template-columns: 46px minmax(0,1fr) 150px 160px; gap: 2px 12px; padding: 10px 0; border-bottom: 1px solid var(--hair); align-items: baseline; }
+    .pub:first-of-type { border-top: 1px solid var(--hair); }
+    .pub .y { grid-column: 1; grid-row: 1; color: var(--muted); }
+    .pub .ta { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .pub .t { font-weight: 700; color: var(--ink); }
+    .pub .a { color: var(--muted); font-size: 11px; }
+    .pub .a em { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+    .pub .a a.ca { color: inherit; font-weight: inherit; border-bottom: none; text-decoration: none; }
+    .pub .a a.ca:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+    .pub .v { grid-column: 3; grid-row: 1; color: var(--muted); font-size: 12px; font-style: italic; }
+    .pub .l { grid-column: 4; grid-row: 1; font-size: 12px; white-space: nowrap; }
+    .sep { color: var(--faint); }
+    .abs { font-weight: 700; border-bottom: 1px solid var(--ink); cursor: pointer; }
+    .abs:hover { opacity: .6; box-shadow: 0 1px 0 0 var(--ink); }
+    .pub-abs { display: none; padding: 10px 0 12px 58px; color: var(--body); font-size: 12px; }
+    .pub-abs.open { display: block; }
+
+    .more { margin-top: 12px; }
+
+    @media (max-width: 640px) {
+      .pub { grid-template-columns: 46px minmax(0,1fr); }
+      .pub .y { grid-column: 1; grid-row: auto; }
+      .pub .ta, .pub .v, .pub .l { grid-column: 2; grid-row: auto; }
+    }
+    .foot { margin-top: 36px; color: var(--muted); font-size: 11px; letter-spacing: 0.4px; }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" type="button" aria-label="Theme follows system settings">System</button>
+  <div class="shell">
+    <div class="nav">
+      <a href="index.html">HOME</a>
+      <span class="cur">PUBLICATIONS</span>
+      <a href="cv.html">CV</a>
+      <a href="code.html">CODE</a>
+    </div>
+
+    <div class="sec">
+      <div class="sb"><b>[ PUBLICATIONS ]</b><span>01</span></div>
+      <div class="box">
+        <div data-list="pubs">
+          <template data-item>
+            <div class="pub">
+              <span class="y">__YEAR__</span>
+              <span class="ta">
+                <span class="t">__TITLE__</span>
+                <span class="a">__AUTHORS__</span>
+              </span>
+              <span class="v">__VENUE__</span>
+              <span class="l"><span class="abs" role="button" tabindex="0" aria-expanded="false">Abs</span>__LINKS__</span>
+            </div>
+            <div class="pub-abs">__ABSTRACT__</div>
+          </template>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot"><span data-slot="footer"></span>
+  </div>
+
+  <script>{% include variants-site-data.js %}</script>
+  <script src="../../assets/js/render.js?v=1"></script>
+  <script src="../../assets/js/theme.js?v=3"></script>
+  <!-- Cloudflare Web Analytics -->
+  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "70a1b7f30e7c4bd1b6f7b1fa611f305f"}'></script>
+
+</body>
+</html>

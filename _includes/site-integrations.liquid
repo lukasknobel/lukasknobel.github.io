@@ -1,0 +1,16 @@
+{% comment %}
+Shared service markup for all production pages. Tokens and verification values
+live under integrations in _config.yml. Add head tags or footer scripts here.
+{% endcomment %}
+{% if include.placement == 'head' %}
+  {% assign verification = site.integrations.google_site_verification | default: '' | strip %}
+  {% if verification != '' %}
+    <meta name="google-site-verification" content="{{ verification | escape }}">
+  {% endif %}
+{% elsif include.placement == 'footer' %}
+  {% assign beacon_token = site.integrations.cloudflare_web_analytics_token | default: '' | strip %}
+  {% if beacon_token != '' %}
+    {% capture beacon_config %}{"token": {{ beacon_token | jsonify }}}{% endcapture %}
+    <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="{{ beacon_config | strip | escape }}"></script>
+  {% endif %}
+{% endif %}

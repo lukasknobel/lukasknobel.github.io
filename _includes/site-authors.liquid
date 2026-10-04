@@ -1,0 +1,15 @@
+{%- assign authors = include.authors | split: ', ' -%}
+{%- for author in authors -%}
+  {%- unless forloop.first -%}, {% endunless -%}
+  {%- assign name = author | remove_first: 'and ' | remove: '*' -%}
+  {%- if author contains 'and ' -%}and {% endif -%}
+  {%- assign coauthor = site.data.site_content.coauthors | where: 'name', name | first -%}
+  {%- if name == site.data.site_content.profile.name -%}
+    <em>{{ name | escape }}</em>
+  {%- elsif coauthor -%}
+    <a class="ca" href="{{ coauthor.url | escape }}">{{ name | escape }}</a>
+  {%- else -%}
+    {{- name | escape -}}
+  {%- endif -%}
+  {%- if author contains '*' -%}*{% endif -%}
+{%- endfor -%}

@@ -1,0 +1,29 @@
+<meta charset="utf-8">
+<meta name="author" content="{{ site.data.site_content.profile.name | escape }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+{% unless page.noindex %}<link rel="canonical" href="{{ page.url | absolute_url }}">{% endunless %}
+<link rel="icon" type="image/png" href="{{ '/assets/img/lk.png' | relative_url }}">
+{% include site-integrations.liquid placement='head' %}
+<!-- Apply the saved theme before the stylesheet loads to avoid a color flash. -->
+<script src="{{ '/assets/js/theme.js?v=3' | relative_url }}"></script>
+<title>{{ page.title | escape }}</title>
+<meta name="description" content="{{ page.description | escape }}">
+{% if page.noindex %}
+  <meta name="robots" content="noindex">
+{% else %}
+  <meta property="og:site_name" content="{{ site.title | escape }}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ page.title | escape }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:description" content="{{ page.description | escape }}">
+  <meta property="og:locale" content="en">
+  <meta property="og:image" content="{{ '/assets/img/og_image.png' | absolute_url }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ page.title | escape }}">
+  <meta name="twitter:description" content="{{ page.description | escape }}">
+  <meta name="twitter:image" content="{{ '/assets/img/og_image.png' | absolute_url }}">
+{% endif %}
+{% if page.section == 'home' %}{% include site-profile.liquid %}{% endif %}
+<link rel="stylesheet" href="{{ '/assets/css/site.css?v=1' | relative_url }}">

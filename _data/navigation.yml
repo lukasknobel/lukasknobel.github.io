@@ -1,0 +1,13 @@
+# Primary navigation; the full news archive is intentionally unlinked.
+- section: home
+  label: HOME
+  url: /
+- section: publications
+  label: PUBLICATIONS
+  url: /publications/
+- section: cv
+  label: CV
+  url: /cv/
+- section: code
+  label: CODE
+  url: /code/

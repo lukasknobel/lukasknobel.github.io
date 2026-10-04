@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {% include site-head.liquid %}
+</head>
+<body class="page-{{ page.section | escape }}">
+  <canvas id="bg" aria-hidden="true"></canvas>
+  <div class="topbar">
+    <button class="theme-toggle" type="button" aria-label="Theme follows system settings">System</button>
+  </div>
+  <div class="shell">
+    {% include site-nav.liquid %}
+    <main>
+      {{ content }}
+    </main>
+    <footer class="foot"><span>{{ site.data.site_content.profile.footer }}</span></footer>
+  </div>
+  <script src="{{ '/assets/js/site.js?v=2' | relative_url }}"></script>
+  <script src="{{ '/assets/js/bg.js?v=12' | relative_url }}"></script>
+  {% include site-integrations.liquid placement='footer' %}
+</body>
+</html>
