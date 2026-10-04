@@ -20,6 +20,11 @@ jobs:
     steps:
     - name: Checkout 🛎️
       uses: actions/checkout@v7
+    - name: Install ImageMagick
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y imagemagick
+        convert -version
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
@@ -29,9 +34,9 @@ jobs:
       run: |
         export JEKYLL_ENV=production
         bundle exec jekyll build
+        test -s _site/assets/img/prof_pic_small-480.webp
     - name: Deploy 🚀
       if: github.event_name != 'pull_request'
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         folder: _site
-
