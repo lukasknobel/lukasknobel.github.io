@@ -1,1 +1,106 @@
-function copyBibTeX(){const e=document.getElementById("bibtex-code"),t=document.querySelector(".copy-bibtex-btn"),o=t.querySelector(".copy-text");e&&navigator.clipboard.writeText(e.textContent).then(function(){t.classList.add("copied"),o.textContent="Cop",setTimeout(function(){t.classList.remove("copied"),o.textContent="Copy"},2e3)}).catch(function(){const n=document.createElement("textarea");n.value=e.textContent,document.body.appendChild(n),n.select(),document.execCommand("copy"),document.body.removeChild(n),t.classList.add("copied"),o.textContent="Cop",setTimeout(function(){t.classList.remove("copied"),o.textContent="Copy"},2e3)})}function scrollToTop(){window.scrollTo({top:0,behavior:"smooth"})}function setupVideoCarouselAutoplay(){const e=document.querySelectorAll(".results-carousel video");if(0===e.length)return;const t=new IntersectionObserver(e=>{e.forEach(e=>{const t=e.target;e.isIntersecting?t.play().catch(()=>{}):t.pause()})},{threshold:.5});e.forEach(e=>{t.observe(e)})}window.HELP_IMPROVE_VIDEOJS=!1,window.addEventListener("scroll",function(){const e=document.querySelector(".scroll-to-top");window.pageYOffset>300?e.classList.add("visible"):e.classList.remove("visible")}),$(document).ready(function(){var e={slidesToScroll:1,slidesToShow:1,loop:!0,infinite:!0,autoplay:!0,autoplaySpeed:5e3};bulmaCarousel.attach(".carousel",e);bulmaSlider.attach(),setupVideoCarouselAutoplay()});
+window.HELP_IMPROVE_VIDEOJS = false;
+
+// Copy BibTeX to clipboard
+function copyBibTeX() {
+    const bibtexElement = document.getElementById('bibtex-code');
+    const button = document.querySelector('.copy-bibtex-btn');
+    const copyText = button.querySelector('.copy-text');
+    
+    if (bibtexElement) {
+        navigator.clipboard.writeText(bibtexElement.textContent).then(function() {
+            // Success feedback
+            button.classList.add('copied');
+            copyText.textContent = 'Cop';
+            
+            setTimeout(function() {
+                button.classList.remove('copied');
+                copyText.textContent = 'Copy';
+            }, 2000);
+        }).catch(function(err) {
+            console.error('Failed to copy: ', err);
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = bibtexElement.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            button.classList.add('copied');
+            copyText.textContent = 'Cop';
+            setTimeout(function() {
+                button.classList.remove('copied');
+                copyText.textContent = 'Copy';
+            }, 2000);
+        });
+    }
+}
+
+// Scroll to top functionality
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Show/hide scroll to top button
+window.addEventListener('scroll', function() {
+    const scrollButton = document.querySelector('.scroll-to-top');
+    if (window.pageYOffset > 300) {
+        scrollButton.classList.add('visible');
+    } else {
+        scrollButton.classList.remove('visible');
+    }
+});
+
+// Video carousel autoplay when in view
+function setupVideoCarouselAutoplay() {
+    const carouselVideos = document.querySelectorAll('.results-carousel video');
+    
+    if (carouselVideos.length === 0) return;
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const video = entry.target;
+            if (entry.isIntersecting) {
+                // Video is in view, play it
+                video.play().catch(e => {
+                    // Autoplay failed, probably due to browser policy
+                    console.log('Autoplay prevented:', e);
+                });
+            } else {
+                // Video is out of view, pause it
+                video.pause();
+            }
+        });
+    }, {
+        threshold: 0.5 // Trigger when 50% of the video is visible
+    });
+    
+    carouselVideos.forEach(video => {
+        observer.observe(video);
+    });
+}
+
+$(document).ready(function() {
+    // Check for click events on the navbar burger icon
+
+    var options = {
+		slidesToScroll: 1,
+		slidesToShow: 1,
+		loop: true,
+		infinite: true,
+		autoplay: true,
+		autoplaySpeed: 5000,
+    }
+
+	// Initialize all div with carousel class
+    var carousels = bulmaCarousel.attach('.carousel', options);
+	
+    bulmaSlider.attach();
+    
+    // Setup video autoplay for carousel
+    setupVideoCarouselAutoplay();
+
+})
