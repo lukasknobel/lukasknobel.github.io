@@ -817,7 +817,8 @@ table.results tr.supervised-last td {
 /* Animation for page load */
 @keyframes fadeInUp {
   from {
-    opacity: 0;
+    /* Keep initial text eligible for LCP while preserving the fade-in. */
+    opacity: 0.01;
     transform: translateY(30px);
   }
   to {
@@ -858,3 +859,18 @@ a:focus {
 
 
 
+
+/* Inline copies of the original icons avoid downloading entire icon libraries. */
+.inline-icon {
+  display: inline-block;
+  height: 1em;
+  width: auto;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+
+/* Reserve media space before lazy-loaded frames and images arrive. */
+.teaser video {
+  width: 100%;
+  height: auto;
+}

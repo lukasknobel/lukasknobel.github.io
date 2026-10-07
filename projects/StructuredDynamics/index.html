@@ -56,13 +56,6 @@ layout: null
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   
-  <!-- Preconnect for performance -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://ajax.googleapis.com">
-  <link rel="preconnect" href="https://documentcloud.adobe.com">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">
-
   <title>Self-Supervised Learning of Structured Dynamics from Videos</title>
   
   <!-- Favicon and App Icons -->
@@ -70,34 +63,17 @@ layout: null
   <link rel="apple-touch-icon" href="static/images/favicon.ico">
   
   <!-- Critical CSS - Load synchronously -->
-  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-project.min.css">
   <link rel="stylesheet" href="static/css/index.css">
   
-  <!-- Non-critical CSS - Load asynchronously -->
-  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  
-  <!-- Fallback for browsers that don't support preload -->
-  <noscript>
-    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
-    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  </noscript>
-  
-  <!-- Fonts - Optimized loading -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Defer non-critical JavaScript -->
-  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-  <script defer src="static/js/fontawesome.all.min.js"></script>
-  <script defer src="static/js/bulma-carousel.min.js"></script>
-  <script defer src="static/js/bulma-slider.min.js"></script>
+  <!-- Local Inter keeps the existing typography without a third-party stylesheet. -->
+  <link rel="preload" href="static/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="static/css/fonts.css">
   <script defer src="static/js/index.js"></script>
 
+  <noscript>
+    <style>.deck-controls, .deferred-media { display: none !important; }</style>
+  </noscript>
   <!-- Project-specific styling. Kept inline for now so the page is easy to test locally; move to static/css/custom.css once stable. -->
   <style>
     :root {
@@ -265,7 +241,7 @@ layout: null
 
   <!-- Scroll to Top Button -->
   <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
-    <i class="fas fa-chevron-up"></i>
+    <svg class="inline-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path fill="currentColor" d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"/></svg>
   </button>
 
 
@@ -297,7 +273,7 @@ layout: null
                   <!-- Arxiv link. -->
                   <span class="link-block">
                     <a href="https://arxiv.org/abs/2607.21576" class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon"><i class="ai ai-arxiv"></i></span>
+                      <span class="icon"><svg class="inline-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path fill="currentColor" transform="translate(0 448) scale(1 -1)" d="M62 440Q66 440 70.5 437.5Q75 435 77 432L79 430L219 296L320 388Q328 396 338 396Q340 396 341 396Q357 392 365 378Q370 366 358 350H357L270 247L295 222Q308 211 308.0 193.5Q308 176 295 164L272 143L401 -12Q411 -22 407 -36Q403 -50 389 -55Q385 -56 382 -56Q371 -56 363 -48L217 91L122 3Q116 -5 106 -5Q91 -5 85 9Q80 23 92 36L172 134L143 161Q129 176 129.5 195.0Q130 214 145 229L170 252Q59 386 48 402Q37 417 41 427Q47 440 62 440ZM338 389Q330 388 325 382L224 291L265 252L352 354Q361 367 358 375Q352 385 341 389Q339 389 338 389ZM175 247 150 224Q137 211 136.5 195.5Q136 180 148 167L368 -43Q374 -48 382 -49Q384 -49 387 -48Q397 -44 400 -34Q403 -26 395 -17Z"/></svg></span>
                       <span>arXiv</span>
                     </a>
                   </span>
@@ -305,7 +281,7 @@ layout: null
                   <!-- Code repository. -->
                   <span class="link-block">
                     <a href="https://github.com/lukasknobel/StructuredDynamics" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon"><i class="fab fa-github"></i></span>
+                      <span class="icon"><svg class="inline-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" aria-hidden="true" focusable="false"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
                       <span>Code</span>
                     </a>
                   </span>
@@ -313,7 +289,7 @@ layout: null
                   <!-- BibTeX section. -->
                   <span class="link-block">
                     <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon"><i class="fas fa-quote-right"></i></span>
+                      <span class="icon"><svg class="inline-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path fill="currentColor" d="M464 32H336c-26.5 0-48 21.5-48 48v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48zm-288 0H48C21.5 32 0 53.5 0 80v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48z"/></svg></span>
                       <span>BibTeX</span>
                     </a>
                   </span>
@@ -329,9 +305,14 @@ layout: null
     <section class="hero teaser">
       <div class="container is-max-desktop">
         <div class="hero-body">
-          <video poster="" id="tree" autoplay controls muted loop height="100%" preload="metadata">
-            <source src="static/videos/teaser.mp4" type="video/mp4">
+          <video class="deferred-media" poster="static/images/teaser-poster.webp" id="tree" controls muted loop playsinline width="2160" height="828" preload="none">
+            <source data-src="static/videos/teaser.mp4" type="video/mp4">
           </video>
+          <noscript>
+            <video poster="static/images/teaser-poster.webp" controls muted playsinline preload="none" width="2160" height="828">
+              <source src="static/videos/teaser.mp4" type="video/mp4">
+            </video>
+          </noscript>
         </div>
       </div>
     </section>
@@ -381,80 +362,85 @@ layout: null
 
               <div class="deck-slide is-active">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/method-00.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/method-00.mp4" type="video/mp4">
+                  </video>
+                  <noscript>
+                    <video controls muted playsinline preload="none" width="2160" height="1000">
+                      <source src="static/videos/method-00.mp4" type="video/mp4">
+                    </video>
+                  </noscript>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/method-01.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
 
               <div class="deck-slide">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/method-01.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/method-02.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
 
               <div class="deck-slide">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/method-02.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/method-03.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
 
               <div class="deck-slide">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/method-03.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/method-04.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
 
               <div class="deck-slide">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/method-04.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/method-05.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
 
               <div class="deck-slide">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/method-05.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/method-06.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
 
               <div class="deck-slide">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/method-06.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/method-07.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
 
               <div class="deck-slide">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/method-07.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/method-08.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
 
               <div class="deck-slide">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/method-08.mp4" type="video/mp4">
-                  </video>
-                </div>
-              </div>
-
-              <div class="deck-slide">
-                <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/method-09.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/method-09.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
@@ -485,56 +471,61 @@ layout: null
 
               <div class="deck-slide is-active">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/experiments-00.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/experiments-00.mp4" type="video/mp4">
+                  </video>
+                  <noscript>
+                    <video controls muted playsinline preload="none" width="2160" height="1000">
+                      <source src="static/videos/experiments-00.mp4" type="video/mp4">
+                    </video>
+                  </noscript>
+                </div>
+              </div>
+
+              <div class="deck-slide">
+                <div class="deck-media-wrap">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/experiments-01.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
 
               <div class="deck-slide">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/experiments-01.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/experiments-02.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
 
               <div class="deck-slide">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/experiments-02.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/experiments-03.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
 
               <div class="deck-slide">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/experiments-03.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/experiments-04.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
 
               <div class="deck-slide">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/experiments-04.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/experiments-05.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
 
               <div class="deck-slide">
                 <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/experiments-05.mp4" type="video/mp4">
-                  </video>
-                </div>
-              </div>
-
-              <div class="deck-slide">
-                <div class="deck-media-wrap">
-                  <video muted playsinline preload="metadata">
-                    <source src="static/videos/experiments-06.mp4" type="video/mp4">
+                  <video class="deferred-media" muted playsinline width="2160" height="1000" preload="none">
+                    <source data-src="static/videos/experiments-06.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
@@ -665,7 +656,7 @@ layout: null
           <article class="qualitative-card">
             <h3 class="title is-4">Stage-wise feature compensation</h3>
             <figure>
-              <img src="static/images/qualitative_structured.png" alt="Stage-wise structured feature prediction showing primary and residual compensation errors.">
+              <img src="static/images/qualitative_structured.webp" width="3350" height="1080" loading="lazy" decoding="async" alt="Stage-wise structured feature prediction showing primary and residual compensation errors.">
               <figcaption>
                 We visualize feature-map error to the target after primary and residual compensation. Errors are shown in red.
                 The <span class="motion-tag primary">primary</span> stage corrects the dominant global change, including the camera-induced movement of the edges of the track. Notably, primary motion compensation increases the error around the independently moving car. The <span class="motion-tag residual">residual</span> stage reduces this localized error.
@@ -676,7 +667,7 @@ layout: null
           <article class="qualitative-card">
             <h3 class="title is-4">Motion extrapolation</h3>
             <figure>
-              <img src="static/images/qualitative_extrapolation.png" alt="Motion extrapolation using repeatedly applied motion tokens.">
+              <img src="static/images/qualitative_extrapolation.webp" width="3415" height="1003" loading="lazy" decoding="async" alt="Motion extrapolation using repeatedly applied motion tokens.">
               <figcaption>
                 Repeatedly applying the last motion token gives plausible short-horizon feature extrapolations, the object features follow the extrapolated motion beyond the last observed position. Over longer horizons, predictions drift, indicating that the tokens capture local dynamics but are not designed for reliable long-range forecasting without new observations. Visualizations are done by PCA projection to RGB after normalization, black boxes mark the last observed ground-truth object position, which is repeated for the extrapolated feature maps.
               </figcaption>
@@ -686,7 +677,7 @@ layout: null
           <article class="qualitative-card">
             <h3 class="title is-4">Latent motion swapping</h3>
             <figure>
-              <img src="static/images/qualitative_swapping.png" alt="Latent motion swapping by applying motion tokens from a source clip to a target clip.">
+              <img src="static/images/qualitative_swapping.webp" width="3375" height="1155" loading="lazy" decoding="async" alt="Latent motion swapping by applying motion tokens from a source clip to a target clip.">
               <figcaption>
                 Applying motion tokens from a source clip to a target clip containing a different object induces consistent short-horizon feature-space motion. This suggests that SDM tokens parameterize local transformations that can transfer across videos, although quality decreases over longer horizons. Black boxes mark the initial object position.
               </figcaption>
@@ -704,7 +695,7 @@ layout: null
         <div class="bibtex-header">
           <h2 class="title section-title">BibTeX</h2>
           <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
-            <i class="fas fa-copy"></i>
+            <svg class="inline-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path fill="currentColor" d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z"/></svg>
             <span class="copy-text">Copy</span>
           </button>
         </div>
@@ -740,125 +731,6 @@ layout: null
   </footer>
 
 
-  <script>
-    function initialiseDeck(deck) {
-      const slides = Array.from(deck.querySelectorAll('.deck-slide'));
-      const dotsWrap = deck.querySelector('.deck-dots');
-      const prev = deck.querySelector('[data-deck-prev]');
-      const next = deck.querySelector('[data-deck-next]');
-      const toggle = deck.querySelector('[data-deck-toggle]');
-
-      let index = 0;
-      let playing = deck.dataset.autoplay === 'true';
-
-      function getVideo(i) {
-        return slides[i]?.querySelector('video') || null;
-      }
-
-      function resetVideo(video) {
-        if (!video) return;
-        video.pause();
-        try {
-          video.currentTime = 0;
-        } catch (e) {
-          // Some browsers may not allow seeking before metadata is loaded.
-        }
-      }
-
-      function playVideo(video) {
-        if (!video || !playing) return;
-        video.play().catch(() => {});
-      }
-
-      function updateDots() {
-        Array.from(dotsWrap.children).forEach((dot, i) => {
-          dot.classList.toggle('is-active', i === index);
-        });
-      }
-
-      function goTo(nextIndex) {
-        const oldIndex = index;
-        const newIndex = (nextIndex + slides.length) % slides.length;
-
-        const oldVideo = getVideo(oldIndex);
-        const newVideo = getVideo(newIndex);
-
-        index = newIndex;
-
-        slides.forEach((slide, i) => {
-          slide.classList.toggle('is-active', i === index);
-        });
-
-        updateDots();
-
-        // Reset the old video only after it is hidden.
-        resetVideo(oldVideo);
-
-        // New video should usually already be at 0 because we reset on leave.
-        // This extra reset is cheap and helps when jumping with dots/buttons.
-        resetVideo(newVideo);
-        playVideo(newVideo);
-      }
-
-      slides.forEach((slide, i) => {
-        const dot = document.createElement('button');
-        dot.className = 'deck-dot' + (i === 0 ? ' is-active' : '');
-        dot.type = 'button';
-        dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-        dot.addEventListener('click', () => goTo(i));
-        dotsWrap.appendChild(dot);
-
-        const video = slide.querySelector('video');
-        const missing = slide.querySelector('.missing-media');
-
-        if (video) {
-          video.preload = 'auto';
-          video.load();
-
-          video.addEventListener('error', () => {
-            if (missing) missing.classList.add('show');
-          }, true);
-
-          video.addEventListener('loadeddata', () => {
-            if (missing) missing.classList.remove('show');
-          });
-
-          video.addEventListener('ended', () => {
-            if (playing) goTo(index + 1);
-          });
-        }
-      });
-
-      prev.addEventListener('click', () => goTo(index - 1));
-      next.addEventListener('click', () => goTo(index + 1));
-
-      toggle.addEventListener('click', () => {
-        playing = !playing;
-        toggle.textContent = playing ? 'Pause' : 'Play';
-
-        const activeVideo = getVideo(index);
-
-        if (playing) {
-          playVideo(activeVideo);
-        } else if (activeVideo) {
-          activeVideo.pause();
-        }
-      });
-
-      toggle.textContent = playing ? 'Pause' : 'Play';
-
-      // Reset all inactive videos at startup.
-      slides.forEach((_, i) => {
-        if (i !== index) resetVideo(getVideo(i));
-      });
-
-      playVideo(getVideo(index));
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('[data-deck]').forEach(initialiseDeck);
-    });
-  </script>
   {% include site-integrations.liquid placement='footer' %}
 </body>
 </html>

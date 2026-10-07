@@ -1,0 +1,10 @@
+The inline icons in index.html retain the original icon shapes.
+
+Font Awesome Free 5.15.1 (chevron-up, github, quote-right, copy)
+Copyright Fonticons, Inc. Icons licensed under CC BY 4.0.
+https://fontawesome.com/license/free
+https://creativecommons.org/licenses/by/4.0/
+
+Academicons (arxiv)
+Copyright James Walsh. Glyph licensed under the SIL Open Font License 1.1.
+https://github.com/jpswalsh/academicons
