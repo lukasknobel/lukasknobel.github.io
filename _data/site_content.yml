@@ -127,6 +127,8 @@ socials:
   url: https://github.com/lukasknobel
 - label: LinkedIn
   url: https://www.linkedin.com/in/lukas-knobel
+- label: Twitter
+  url: https://x.com/LukasKnobel1
 repos:
 - name: SelfCollages
   url: https://github.com/lukasknobel/SelfCollages
