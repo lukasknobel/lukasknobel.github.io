@@ -4,6 +4,7 @@ profile:
   name: Lukas Knobel
   role: ELLIS PhD candidate
   org: <a href="https://fundamentalailab.github.io/">Fundamental AI Lab</a>, University of Technology Nuremberg, Germany
+  visiting: Visiting the <a href="https://www.robots.ox.ac.uk/~vgg/">Visual Geometry Group (VGG)</a>, University of Oxford, UK.
   focus: Self-supervised & representation learning for images and video
   image: ../../assets/img/prof_pic.jpg
   footer: '&copy; 2026 Lukas Knobel'
@@ -85,6 +86,8 @@ papers:
     Code: https://github.com/reproducibilityaccount/reproducing-ridesharing
   abstract: 'Our work attempts to verify two methods to mitigate forms of inequality in ride‐pooling platforms proposed in the paper Data-Driven Methods for Balancing Fairness and Efficiency in Ride-Pooling: (1) integrating fairness constraints into the objective functions and (2) redistributing income of drivers. We extend this paper by testing for robustness to a change in the neighbourhood selection process by using actual Manhattan neighbour‐hoods and we use corresponding demographic data to examine differences in service based on ethnicity.'
 news:
+- date: '2026-10-19'
+  text: I started my research visit to the <a href='https://www.robots.ox.ac.uk/~vgg/'>Visual Geometry Group (VGG) at the University of Oxford</a>, working with my co-supervisor <a href='https://scholar.google.com/citations?user=UZ5wscMAAAAJ&hl=en'>Andrew Zisserman</a> as part of my ELLIS PhD program.
 - date: '2026-09-24'
   text: 'Our paper "<a href=''https://martinovicivan.github.io/StreamMAE/''>I Have a Stream: Making Self-Supervised Learning Work on Continuous Video</a>" has been accepted at NeurIPS2026!'
 - date: '2026-04-14'
